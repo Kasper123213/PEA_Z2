@@ -3,4 +3,6 @@ project(PEA2)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(PEA2 main.cpp)
+add_executable(PEA2 main.cpp
+        Test.cpp
+        time/Time.cpp)
