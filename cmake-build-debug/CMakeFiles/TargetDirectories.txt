@@ -1,0 +1,3 @@
+C:/Users/radom/Desktop/PEA2/cmake-build-debug/CMakeFiles/PEA2.dir
+C:/Users/radom/Desktop/PEA2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/radom/Desktop/PEA2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
