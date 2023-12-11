@@ -51,21 +51,21 @@ build cmake_object_order_depends_target_PEA2: phony || CMakeFiles/PEA2.dir
 
 build CMakeFiles/PEA2.dir/main.cpp.obj: CXX_COMPILER__PEA2_unscanned_Debug C$:/Users/radom/Desktop/PEA2/main.cpp || cmake_object_order_depends_target_PEA2
   DEP_FILE = CMakeFiles\PEA2.dir\main.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -static -static-libstdc++ -static-libgcc -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\PEA2.dir
   OBJECT_FILE_DIR = CMakeFiles\PEA2.dir
 
 build CMakeFiles/PEA2.dir/Test.cpp.obj: CXX_COMPILER__PEA2_unscanned_Debug C$:/Users/radom/Desktop/PEA2/Test.cpp || cmake_object_order_depends_target_PEA2
   DEP_FILE = CMakeFiles\PEA2.dir\Test.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -static -static-libstdc++ -static-libgcc -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\PEA2.dir
   OBJECT_FILE_DIR = CMakeFiles\PEA2.dir
 
-build CMakeFiles/PEA2.dir/time/Time.cpp.obj: CXX_COMPILER__PEA2_unscanned_Debug C$:/Users/radom/Desktop/PEA2/time/Time.cpp || cmake_object_order_depends_target_PEA2
-  DEP_FILE = CMakeFiles\PEA2.dir\time\Time.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
+build CMakeFiles/PEA2.dir/SA/Sa.cpp.obj: CXX_COMPILER__PEA2_unscanned_Debug C$:/Users/radom/Desktop/PEA2/SA/Sa.cpp || cmake_object_order_depends_target_PEA2
+  DEP_FILE = CMakeFiles\PEA2.dir\SA\Sa.cpp.obj.d
+  FLAGS = -static -static-libstdc++ -static-libgcc -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\PEA2.dir
-  OBJECT_FILE_DIR = CMakeFiles\PEA2.dir\time
+  OBJECT_FILE_DIR = CMakeFiles\PEA2.dir\SA
 
 
 # =============================================================================
@@ -75,8 +75,8 @@ build CMakeFiles/PEA2.dir/time/Time.cpp.obj: CXX_COMPILER__PEA2_unscanned_Debug 
 #############################################
 # Link the executable PEA2.exe
 
-build PEA2.exe: CXX_EXECUTABLE_LINKER__PEA2_Debug CMakeFiles/PEA2.dir/main.cpp.obj CMakeFiles/PEA2.dir/Test.cpp.obj CMakeFiles/PEA2.dir/time/Time.cpp.obj
-  FLAGS = -g
+build PEA2.exe: CXX_EXECUTABLE_LINKER__PEA2_Debug CMakeFiles/PEA2.dir/main.cpp.obj CMakeFiles/PEA2.dir/Test.cpp.obj CMakeFiles/PEA2.dir/SA/Sa.cpp.obj
+  FLAGS = -static -static-libstdc++ -static-libgcc -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\PEA2.dir
   POST_BUILD = cd .

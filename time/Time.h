@@ -17,7 +17,7 @@ public:
 
     void stop();
 
-    unsigned long long getTime();
+    long getTime();
 };
 
 

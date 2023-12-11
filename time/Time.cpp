@@ -14,5 +14,5 @@ void Time::stop() {
 // Wyświetlany jest w jednostkach łatwiejszych do wyobrażenia sobie przez człowieka jednak na wykresie
 //zapisywana jest dokładniejsza wersja; w nanosekundach
 unsigned long long Time::getTime() {
-    return duration_cast<nanoseconds>(stopTime - startTime).count();
+    return duration_cast<seconds >(stopTime - startTime).count();
 }
