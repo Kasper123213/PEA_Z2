@@ -22,7 +22,9 @@ Sa::~Sa(){
 
 void Sa::start(){
 
-//    vector<int> currentPath = std::copy(bestPath.begin(), bestPath.end(),);
+    vector<int> currentPath = bestPath;
+    int currentLen = bestLen;
+    cout<<"DUuuuuuuuuuuuuuuupa"<<endl;
 
 }
 

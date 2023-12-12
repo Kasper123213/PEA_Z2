@@ -7,6 +7,9 @@ Test::Test() {
     //zmienna przechowująca decyzje użytkownika o uruchomieniu testu automatycznegp
     char choice;
 
+    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
+    startAnneling();//todo na potrzeby testowania
+    return;
     while (true) {
         cout << "Czy chciałbyś wykonać testowanie automatyczne algorytmów dla wielu wartości? t/n" << endl
              << "(Opcja do generowania sprawozdania). Aby wyjść naciśnij dowolną inną literę" <<endl;
@@ -36,13 +39,14 @@ Test::~Test() {
 
 void Test::pokazDane(){
     if(fileName!="")cout<<"Nazwa Pliku: "<<fileName<<endl;
-    if(stopCondition!="")cout<<"Kryterium Stopu : "<<stopCondition<<endl;
+    if(stopCondition!=NULL)cout<<"Kryterium Stopu : "<<stopCondition<<endl;
     if(neighbours!="")cout<<"Wybor Sasiedstwa: "<<neighbours<<endl;
-    if(dT!="")cout<<"Współczynnik Zmiany Temperatury: "<<dT<<endl;
+    if(dT!=NULL)cout<<"Współczynnik Zmiany Temperatury: "<<dT<<endl;
 }
 
 //uruchomienie testów algorytmu
 void Test::startTest(){
+
     while (true){
         pokazDane();
 
@@ -93,12 +97,12 @@ void Test::startTest(){
                 cin>>dT;
                 break;
             case 6:
-                if(dT!=NULL and stopCondition!=NULL) {
+//                if(dT!=NULL and stopCondition!=NULL) {
                     startAnneling();
-                }
-                else{
-                    cout<<"Uzupełnij dane do algorytmu"<<endl;
-                }
+//                }
+//                else{
+//                    cout<<"Uzupełnij dane do algorytmu"<<endl;
+//                }
                 break;
             case 7:
                 break;
@@ -193,6 +197,6 @@ void  Test::deleteMatrix() {//todo na czas testów
 void Test::startAnneling() {
     Sa* simAnneling = new Sa(matrix, matrixSize);
 
-    simAnneling.start();
+    simAnneling->start();
     delete simAnneling;
 }
