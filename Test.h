@@ -9,9 +9,9 @@ using namespace std;
 class Test {
 private:
     string fileName="";
-    int stopCondition=NULL;
+    int maxTime=-1;
     string neighbours="";
-    int dT=NULL;
+    double coolingFactor=-1;
     int matrixSize{};
     int **matrix{};
     void pokazDane();
@@ -20,6 +20,7 @@ private:
     void deleteMatrix();//todo na czas testów
     void printMatrix();//todo na czas testów
     void startAnneling();
+    void readFTV(string path);
 public:
     Test();
     ~Test();

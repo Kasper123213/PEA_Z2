@@ -1,13 +1,20 @@
 #include <fstream>
+#include <sstream>
 #include "Test.h"
 #include "SA/Sa.h"
+#include "fileReader/ftvReader.h"
 
 //konstruktor klasy
 Test::Test() {
     //zmienna przechowująca decyzje użytkownika o uruchomieniu testu automatycznegp
     char choice;
 
-    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
+//    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
+
+    string path = "C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt";
+//    ftvReader* f;
+    readFTV(path);
+//    cout<<matrix[0][1];
     startAnneling();//todo na potrzeby testowania
     return;
     while (true) {
@@ -39,9 +46,9 @@ Test::~Test() {
 
 void Test::pokazDane(){
     if(fileName!="")cout<<"Nazwa Pliku: "<<fileName<<endl;
-    if(stopCondition!=NULL)cout<<"Kryterium Stopu : "<<stopCondition<<endl;
+    if(maxTime!=-1)cout<<"Kryterium Stopu : "<<maxTime<<endl;
     if(neighbours!="")cout<<"Wybor Sasiedstwa: "<<neighbours<<endl;
-    if(dT!=NULL)cout<<"Współczynnik Zmiany Temperatury: "<<dT<<endl;
+    if(coolingFactor!=-1)cout<<"Współczynnik Zmiany Temperatury: "<<coolingFactor<<endl;
 }
 
 //uruchomienie testów algorytmu
@@ -83,7 +90,7 @@ void Test::startTest(){
             case 2:
 //                system("cls");//todo zostawic to
                 cout<<"Podaj czas po jakim algorytm ma zakończyć działanie (w sekundach)"<<endl<<">>";
-                cin>>stopCondition;
+                cin>>maxTime;
                 break;
             case 3:
                 //todo jesli zrobie TS
@@ -94,10 +101,10 @@ void Test::startTest(){
             case 5:
 //                system("cls");//todo zostawic to
                 cout<<"Podaj wspolczynnik zmiany temperatury"<<endl<<">>";
-                cin>>dT;
+                cin>>coolingFactor;
                 break;
             case 6:
-//                if(dT!=NULL and stopCondition!=NULL) {
+//                if(coolingFactor!=-1 and maxTime!=-1) {
                     startAnneling();
 //                }
 //                else{
@@ -195,8 +202,77 @@ void  Test::deleteMatrix() {//todo na czas testów
 }
 
 void Test::startAnneling() {
-    Sa* simAnneling = new Sa(matrix, matrixSize);
+//    Sa* simAnneling = new Sa(matrix, matrixSize, coolingFactor, maxTime);//todo to zostawic
+    Sa* simAnneling = new Sa(matrix, matrixSize, 1, 60);
 
     simAnneling->start();
     delete simAnneling;
+}
+
+void Test::readFTV(string path){
+    int size{};
+    // Otwórz plik
+    ifstream file(path);
+
+    // Sprawdź, czy udało się otworzyć plik
+    if (!file.is_open()) {
+        cout << "Nie można otworzyc." << endl;
+    }
+
+    // Zmienna przechowująca wartość wczytaną z pliku
+    string word;
+
+    // Wyczyść flagi błędów i pozycję odczytu pliku
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    bool startReading = false;
+    bool readSize = false;
+
+    int x = 0;
+    int y = 0;
+    while (file >> word) {
+        if (word.find("DIMENSION:") != string::npos) {
+            readSize = true;
+            continue;
+        }
+        if (readSize) {
+            istringstream iss(word);
+            iss >> size;
+            matrix = new int *[size];
+            for(int i=0; i<size;i++){
+                matrix[i] = new int[size];
+            }
+            readSize = false;
+        }
+
+        if (word.find("EDGE_WEIGHT_SECTION") != string::npos) {
+            startReading = true;
+            continue;
+        }
+        if (startReading) {
+            istringstream iss(word);
+            float weight{};
+            while (iss >> weight) {
+                matrix[y][x] = weight;
+                x++;
+                if(x==size){
+                    x=0;
+                    y++;
+                }
+            }
+        }
+
+    }
+    file.close();
+
+//    for(int i=0;i<y;i++){
+//        for(int j=0;j<y;j++){
+//            cout<<matrix[i][j]<<", ";
+//        }
+//        cout<<endl<<"########################################"<<endl;
+//    }
+    matrixSize = y;
+
+
 }

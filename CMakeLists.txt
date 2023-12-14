@@ -8,4 +8,10 @@ add_executable(PEA2 main.cpp
         Test.cpp
         SA/Sa.cpp
         SA/Sa.h
-        SA/Sa.h)
+        time/Time.cpp
+        time/Time.cpp
+        fileReader/rbgReader.h
+        fileReader/ftvReader.cpp
+        fileReader/ftvReader.h
+        fileReader/rbgReader.cpp
+)

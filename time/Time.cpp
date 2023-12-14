@@ -13,6 +13,7 @@ void Time::stop() {
 //dla lepszego efektu wynik jest zwracany z dużą dokładnością.
 // Wyświetlany jest w jednostkach łatwiejszych do wyobrażenia sobie przez człowieka jednak na wykresie
 //zapisywana jest dokładniejsza wersja; w nanosekundach
-unsigned long long Time::getTime() {
-    return duration_cast<seconds >(stopTime - startTime).count();
+long Time::getTime() {
+    stop();
+    return duration_cast<seconds>(stopTime - startTime).count();
 }
