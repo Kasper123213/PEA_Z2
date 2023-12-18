@@ -2,7 +2,6 @@
 #include <sstream>
 #include "Test.h"
 #include "SA/Sa.h"
-#include "fileReader/ftvReader.h"
 
 //konstruktor klasy
 Test::Test() {
@@ -11,11 +10,13 @@ Test::Test() {
 
 //    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
 
-    string path = "C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt";
+    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z1\\tsp.txt";
 //    ftvReader* f;
-    readFTV(path);
+    readMatrix(path);
+    string solution = "0, 68, 65, 34, 37, 48, 26, 69, 14, 55, 60, 35, 19, 17, 38, 8, 59, 63, 15, 25, 47, 13, 11, 39, 30, 6, 64, 53, 66, 12, 67, 56, 33, 45, 22, 42, 18, 50, 54, 32, 1, 58, 20, 7, 46, 3, 9, 31, 16, 62, 5, 41, 24, 70, 44, 10, 61, 51, 52, 43, 28, 2, 40, 23, 27, 57, 49, 4, 36, 29, 21, 0,";
+    checkPath(solution);
 //    cout<<matrix[0][1];
-    startAnneling();//todo na potrzeby testowania
+//    startAnneling();//todo na potrzeby testowania
     return;
     while (true) {
         cout << "Czy chciałbyś wykonać testowanie automatyczne algorytmów dla wielu wartości? t/n" << endl
@@ -203,13 +204,13 @@ void  Test::deleteMatrix() {//todo na czas testów
 
 void Test::startAnneling() {
 //    Sa* simAnneling = new Sa(matrix, matrixSize, coolingFactor, maxTime);//todo to zostawic
-    Sa* simAnneling = new Sa(matrix, matrixSize, 1, 60);
+    Sa* simAnneling = new Sa(matrix, matrixSize, 0.995, 5*60);
 
     simAnneling->start();
     delete simAnneling;
 }
 
-void Test::readFTV(string path){
+void Test::readMatrix(string path){
     int size{};
     // Otwórz plik
     ifstream file(path);
@@ -275,4 +276,26 @@ void Test::readFTV(string path){
     matrixSize = y;
 
 
+}
+
+
+void Test::checkPath(string solution){
+    std::vector<int> numbers;
+    std::stringstream ss(solution);
+    int number;
+
+    // Wczytaj liczby ze stringa do wektora
+    while (ss >> number) {
+        numbers.push_back(number);
+
+        // Jeśli następny znak to przecinek, zignoruj go
+        if (ss.peek() == ',')
+            ss.ignore();
+    }
+
+    int sum = 0;
+    for(int i=0; i<numbers.size()-1;i++){
+        sum+=matrix[numbers[i]][numbers[i+1]];
+    }
+    cout<<"Długość podanej ścieżki to: "<<sum<<endl;
 }

@@ -6,12 +6,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 add_executable(PEA2 main.cpp
         Test.cpp
+        Test.h
         SA/Sa.cpp
         SA/Sa.h
         time/Time.cpp
         time/Time.cpp
-        fileReader/rbgReader.h
-        fileReader/ftvReader.cpp
-        fileReader/ftvReader.h
-        fileReader/rbgReader.cpp
-)
+        )

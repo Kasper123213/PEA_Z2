@@ -2,6 +2,7 @@
 #define PEA1_TEST_H
 
 #include<iostream>
+#include <vector>
 #include "time/Time.h"
 
 using namespace std;
@@ -20,7 +21,8 @@ private:
     void deleteMatrix();//todo na czas testów
     void printMatrix();//todo na czas testów
     void startAnneling();
-    void readFTV(string path);
+    void readMatrix(string path);
+    void checkPath(string solution);
 public:
     Test();
     ~Test();

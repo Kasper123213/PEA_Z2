@@ -16,13 +16,13 @@ private:
     int bestLen;
     int currentLen; //stan w ktorym teraz przebywamy
     int testLen;//stan do sprawdzenia
-    int beginningTemperature;
+    double beginningTemperature;
     double coolingFactor;
     vector<int> bestPath;
     vector<int> currentPath;
     vector<int> testPath;
     void greedyAlg();
-    int calcBeginningTemperature(int bestLen, double N);
+    double calcBeginningTemperature(int bestLen, double N);
     void calcLen();
     double calcNewTemperature(double currentTemperature, int eraNumber);
     double calcGeometricTemp(double T);
@@ -30,7 +30,7 @@ private:
     double calcExpotentialTemp(double T, int eraNumber);
     pair<int, int> generateSwapPoints();
     void swapPoints(pair<int, int> swappedPoints);
-    int calcEra(int size, int alpha);
+    int calcEra(int size, double alpha);
 public:
     void start();
     Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime);

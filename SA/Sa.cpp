@@ -14,7 +14,7 @@ Sa::Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime) {//todo 
     this->coolingFactor = coolingFactor;
     this->maxTime = maxTime;
     greedyAlg();
-    beginningTemperature = calcBeginningTemperature(bestLen, 0.01);
+    beginningTemperature = calcBeginningTemperature(bestLen, matrixSize);
 };
 
 
@@ -34,9 +34,9 @@ void Sa::start(){
 
     currentLen = bestLen;
     testLen = bestLen;
-
+    int greedyLen = bestLen;//todo greedylen
     double currentTemperature = beginningTemperature;
-    int eraLen = calcEra(matrixSize, 3);//todo sprawdzic alpha
+    int eraLen = calcEra(matrixSize, 30);//todo sprawdzic alpha
     int eraNumber = 0;
     pair<int, int> swappedPoints;
     Time* time = new Time();
@@ -60,7 +60,7 @@ void Sa::start(){
             if(delta<=0) {
                 currentLen = testLen;
                 currentPath = testPath;
-                if(currentLen<=bestLen){//todo usunąćte niedozwolone triki chyba
+                if(currentLen<bestLen){//todo usunąćte niedozwolone triki chyba
                     bestLen = currentLen;
                     bestPath = currentPath;
                 }
@@ -82,16 +82,19 @@ void Sa::start(){
 
         eraNumber++;
         currentTemperature = calcNewTemperature(currentTemperature, eraNumber);
-    }while(currentTemperature>=pow(10,-10) and time->getTime()<=maxTime);//todo ptzemyslec czy pow(10,-15)
+    }while(currentTemperature>=pow(10,-9) and time->getTime()<=maxTime);//todo ptzemyslec czy pow(10,-15)
 
     cout<<"Juz po wyrzazeniu"<<endl;
     cout<<"Czas to: "<<time->getTime()<<" a oczekiwany to : "<<maxTime<<endl;//todo to do  przeniesienia
     cout<<"Temperatura to: "<<currentTemperature<<endl;//todo to do  przeniesienia
     cout<<"Rozwiązanie po wyżażeniu to : ";
-    for(int i:bestPath){
+    for(int i:currentPath){
         cout<<i<<", ";
     }
-    cout<<endl<<"dlugosc to: "<<bestLen;
+    cout<<endl<<"dlugosc to: "<<currentLen<<endl;
+    cout<<"greedylen to :"<<greedyLen<<endl;
+    cout<<"bestlen to :"<<bestLen<<endl;
+
 
 }
 
@@ -137,8 +140,9 @@ void Sa::greedyAlg(){
 }
 
 
-int Sa::calcBeginningTemperature(int bestLen, double N){
-    return bestLen*N;
+double Sa::calcBeginningTemperature(int bestLen, double N){
+    double x = bestLen*N;
+    return x;
 }
 
 
@@ -149,8 +153,7 @@ double Sa::calcNewTemperature(double T, int eraNumber){
 }
 
 double Sa::calcGeometricTemp(double T){
-    double alfa = 0.99; //todo  zostawic 0.999
-    return T*alfa*coolingFactor;
+    return T*coolingFactor; //*0.995 dla 5 minut
 }
 
 double Sa::calcLogaritmicTemp(double T, int eraNumber){
@@ -201,6 +204,6 @@ void Sa::calcLen(){
 
 
 
-int Sa::calcEra(int size, int alpha){
+int Sa::calcEra(int size, double alpha){
     return size*alpha;
 }
