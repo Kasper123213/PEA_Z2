@@ -84,16 +84,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/SA/Sa.cpp">
-			<Option target="PEA2"/>
-		</Unit>
-		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/SA/Sa.h">
-			<Option target="PEA2"/>
-		</Unit>
 		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/Test.cpp">
 			<Option target="PEA2"/>
 		</Unit>
 		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/Test.h">
+			<Option target="PEA2"/>
+		</Unit>
+		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Sa.cpp">
+			<Option target="PEA2"/>
+		</Unit>
+		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Sa.h">
+			<Option target="PEA2"/>
+		</Unit>
+		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Ts.cpp">
+			<Option target="PEA2"/>
+		</Unit>
+		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Ts.h">
 			<Option target="PEA2"/>
 		</Unit>
 		<Unit filename="C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/main.cpp">

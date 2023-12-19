@@ -13,8 +13,8 @@ Sa::Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime) {//todo 
     this->matrixSize = matrixSize;
     this->coolingFactor = coolingFactor;
     this->maxTime = maxTime;
+    beginningTemperature = calcBeginningTemperature(bestLen, 1);
     greedyAlg();
-    beginningTemperature = calcBeginningTemperature(bestLen, matrixSize);
 };
 
 
@@ -73,11 +73,11 @@ void Sa::start(){
                 }
             }
         }
-        for(auto x: currentPath){
-            cout<<x<<", ";
-        }
-        cout<<" dlugosc: "<<currentLen<< endl<<"temperatura: "<< currentTemperature<<endl;
-        cout<<"##########################"<<endl;
+//        for(auto x: currentPath){
+//            cout<<x<<", ";
+//        }
+//        cout<<" dlugosc: "<<currentLen<< endl<<"temperatura: "<< currentTemperature<<endl;
+//        cout<<"##########################"<<endl;
 
 
         eraNumber++;
@@ -96,6 +96,7 @@ void Sa::start(){
     cout<<"bestlen to :"<<bestLen<<endl;
 
 
+    delete time;
 }
 
 
@@ -135,6 +136,7 @@ void Sa::greedyAlg(){
     }
 
     cout<<"len: "<<bestLen<<endl;
+    cout<<"temperatura to: "<<beginningTemperature;
     //##############################################
 
 }
@@ -171,6 +173,12 @@ pair<int, int> Sa::generateSwapPoints(){
 
     int indexI = (int)(dis(gen) * matrixSize);
     int indexJ = (int)(dis(gen) * matrixSize);
+//    int indexJ;
+//    if(indexI==matrixSize-1){
+//        indexJ = 0;
+//    }else{
+//        indexJ = indexI+1;
+//    }
 
     if(indexJ!=indexI) {
         pair<int, int> swapped(indexI, indexJ);
@@ -178,6 +186,8 @@ pair<int, int> Sa::generateSwapPoints(){
     }else{
         return generateSwapPoints();
     }
+//        pair<int, int> swapped(indexI, indexJ);
+//        return swapped;
 
 }
 

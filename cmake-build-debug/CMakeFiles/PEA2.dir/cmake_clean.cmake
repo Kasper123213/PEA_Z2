@@ -1,8 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/PEA2.dir/SA/Sa.cpp.obj"
-  "CMakeFiles/PEA2.dir/SA/Sa.cpp.obj.d"
   "CMakeFiles/PEA2.dir/Test.cpp.obj"
   "CMakeFiles/PEA2.dir/Test.cpp.obj.d"
+  "CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj"
+  "CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj.d"
+  "CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj"
+  "CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj.d"
   "CMakeFiles/PEA2.dir/main.cpp.obj"
   "CMakeFiles/PEA2.dir/main.cpp.obj.d"
   "CMakeFiles/PEA2.dir/time/Time.cpp.obj"

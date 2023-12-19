@@ -96,19 +96,19 @@ CMakeFiles/PEA2.dir/Test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PEA2.dir/Test.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\Test.cpp -o CMakeFiles\PEA2.dir\Test.cpp.s
 
-CMakeFiles/PEA2.dir/SA/Sa.cpp.obj: CMakeFiles/PEA2.dir/flags.make
-CMakeFiles/PEA2.dir/SA/Sa.cpp.obj: C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/SA/Sa.cpp
-CMakeFiles/PEA2.dir/SA/Sa.cpp.obj: CMakeFiles/PEA2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PEA2.dir/SA/Sa.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PEA2.dir/SA/Sa.cpp.obj -MF CMakeFiles\PEA2.dir\SA\Sa.cpp.obj.d -o CMakeFiles\PEA2.dir\SA\Sa.cpp.obj -c C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\SA\Sa.cpp
+CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj: CMakeFiles/PEA2.dir/flags.make
+CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj: C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Sa.cpp
+CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj: CMakeFiles/PEA2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj -MF CMakeFiles\PEA2.dir\algorithms\Sa.cpp.obj.d -o CMakeFiles\PEA2.dir\algorithms\Sa.cpp.obj -c C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Sa.cpp
 
-CMakeFiles/PEA2.dir/SA/Sa.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PEA2.dir/SA/Sa.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\SA\Sa.cpp > CMakeFiles\PEA2.dir\SA\Sa.cpp.i
+CMakeFiles/PEA2.dir/algorithms/Sa.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PEA2.dir/algorithms/Sa.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Sa.cpp > CMakeFiles\PEA2.dir\algorithms\Sa.cpp.i
 
-CMakeFiles/PEA2.dir/SA/Sa.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PEA2.dir/SA/Sa.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\SA\Sa.cpp -o CMakeFiles\PEA2.dir\SA\Sa.cpp.s
+CMakeFiles/PEA2.dir/algorithms/Sa.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PEA2.dir/algorithms/Sa.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Sa.cpp -o CMakeFiles\PEA2.dir\algorithms\Sa.cpp.s
 
 CMakeFiles/PEA2.dir/time/Time.cpp.obj: CMakeFiles/PEA2.dir/flags.make
 CMakeFiles/PEA2.dir/time/Time.cpp.obj: C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/time/Time.cpp
@@ -124,25 +124,41 @@ CMakeFiles/PEA2.dir/time/Time.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PEA2.dir/time/Time.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\time\Time.cpp -o CMakeFiles\PEA2.dir\time\Time.cpp.s
 
+CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj: CMakeFiles/PEA2.dir/flags.make
+CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj: C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/algorithms/Ts.cpp
+CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj: CMakeFiles/PEA2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj -MF CMakeFiles\PEA2.dir\algorithms\Ts.cpp.obj.d -o CMakeFiles\PEA2.dir\algorithms\Ts.cpp.obj -c C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Ts.cpp
+
+CMakeFiles/PEA2.dir/algorithms/Ts.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PEA2.dir/algorithms/Ts.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Ts.cpp > CMakeFiles\PEA2.dir\algorithms\Ts.cpp.i
+
+CMakeFiles/PEA2.dir/algorithms/Ts.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PEA2.dir/algorithms/Ts.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.3\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\algorithms\Ts.cpp -o CMakeFiles\PEA2.dir\algorithms\Ts.cpp.s
+
 # Object files for target PEA2
 PEA2_OBJECTS = \
 "CMakeFiles/PEA2.dir/main.cpp.obj" \
 "CMakeFiles/PEA2.dir/Test.cpp.obj" \
-"CMakeFiles/PEA2.dir/SA/Sa.cpp.obj" \
-"CMakeFiles/PEA2.dir/time/Time.cpp.obj"
+"CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj" \
+"CMakeFiles/PEA2.dir/time/Time.cpp.obj" \
+"CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj"
 
 # External object files for target PEA2
 PEA2_EXTERNAL_OBJECTS =
 
 PEA2.exe: CMakeFiles/PEA2.dir/main.cpp.obj
 PEA2.exe: CMakeFiles/PEA2.dir/Test.cpp.obj
-PEA2.exe: CMakeFiles/PEA2.dir/SA/Sa.cpp.obj
+PEA2.exe: CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj
 PEA2.exe: CMakeFiles/PEA2.dir/time/Time.cpp.obj
+PEA2.exe: CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj
 PEA2.exe: CMakeFiles/PEA2.dir/build.make
 PEA2.exe: CMakeFiles/PEA2.dir/linkLibs.rsp
 PEA2.exe: CMakeFiles/PEA2.dir/objects1.rsp
 PEA2.exe: CMakeFiles/PEA2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable PEA2.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\radom\OneDrive\Pulpit\PEA\PEA_Z2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable PEA2.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\PEA2.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

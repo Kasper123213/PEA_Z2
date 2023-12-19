@@ -128,30 +128,6 @@ PEA2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/build
 .PHONY : PEA2/fast
 
-SA/Sa.obj: SA/Sa.cpp.obj
-.PHONY : SA/Sa.obj
-
-# target to build an object file
-SA/Sa.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/SA/Sa.cpp.obj
-.PHONY : SA/Sa.cpp.obj
-
-SA/Sa.i: SA/Sa.cpp.i
-.PHONY : SA/Sa.i
-
-# target to preprocess a source file
-SA/Sa.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/SA/Sa.cpp.i
-.PHONY : SA/Sa.cpp.i
-
-SA/Sa.s: SA/Sa.cpp.s
-.PHONY : SA/Sa.s
-
-# target to generate assembly for a file
-SA/Sa.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/SA/Sa.cpp.s
-.PHONY : SA/Sa.cpp.s
-
 Test.obj: Test.cpp.obj
 .PHONY : Test.obj
 
@@ -175,6 +151,54 @@ Test.s: Test.cpp.s
 Test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/Test.cpp.s
 .PHONY : Test.cpp.s
+
+algorithms/Sa.obj: algorithms/Sa.cpp.obj
+.PHONY : algorithms/Sa.obj
+
+# target to build an object file
+algorithms/Sa.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Sa.cpp.obj
+.PHONY : algorithms/Sa.cpp.obj
+
+algorithms/Sa.i: algorithms/Sa.cpp.i
+.PHONY : algorithms/Sa.i
+
+# target to preprocess a source file
+algorithms/Sa.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Sa.cpp.i
+.PHONY : algorithms/Sa.cpp.i
+
+algorithms/Sa.s: algorithms/Sa.cpp.s
+.PHONY : algorithms/Sa.s
+
+# target to generate assembly for a file
+algorithms/Sa.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Sa.cpp.s
+.PHONY : algorithms/Sa.cpp.s
+
+algorithms/Ts.obj: algorithms/Ts.cpp.obj
+.PHONY : algorithms/Ts.obj
+
+# target to build an object file
+algorithms/Ts.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Ts.cpp.obj
+.PHONY : algorithms/Ts.cpp.obj
+
+algorithms/Ts.i: algorithms/Ts.cpp.i
+.PHONY : algorithms/Ts.i
+
+# target to preprocess a source file
+algorithms/Ts.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Ts.cpp.i
+.PHONY : algorithms/Ts.cpp.i
+
+algorithms/Ts.s: algorithms/Ts.cpp.s
+.PHONY : algorithms/Ts.s
+
+# target to generate assembly for a file
+algorithms/Ts.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PEA2.dir\build.make CMakeFiles/PEA2.dir/algorithms/Ts.cpp.s
+.PHONY : algorithms/Ts.cpp.s
 
 main.obj: main.cpp.obj
 .PHONY : main.obj
@@ -233,12 +257,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... PEA2
-	@echo ... SA/Sa.obj
-	@echo ... SA/Sa.i
-	@echo ... SA/Sa.s
 	@echo ... Test.obj
 	@echo ... Test.i
 	@echo ... Test.s
+	@echo ... algorithms/Sa.obj
+	@echo ... algorithms/Sa.i
+	@echo ... algorithms/Sa.s
+	@echo ... algorithms/Ts.obj
+	@echo ... algorithms/Ts.i
+	@echo ... algorithms/Ts.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

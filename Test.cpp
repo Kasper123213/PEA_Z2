@@ -1,7 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include "Test.h"
-#include "SA/Sa.h"
+#include "algorithms/Sa.h"
 
 //konstruktor klasy
 Test::Test() {
@@ -10,13 +10,28 @@ Test::Test() {
 
 //    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
 
-    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z1\\tsp.txt";
-//    ftvReader* f;
-    readMatrix(path);
-    string solution = "0, 68, 65, 34, 37, 48, 26, 69, 14, 55, 60, 35, 19, 17, 38, 8, 59, 63, 15, 25, 47, 13, 11, 39, 30, 6, 64, 53, 66, 12, 67, 56, 33, 45, 22, 42, 18, 50, 54, 32, 1, 58, 20, 7, 46, 3, 9, 31, 16, 62, 5, 41, 24, 70, 44, 10, 61, 51, 52, 43, 28, 2, 40, 23, 27, 57, 49, 4, 36, 29, 21, 0,";
-    checkPath(solution);
-//    cout<<matrix[0][1];
+//    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z1\\tsp.txt";
+////    ftvReader* f;
+//    readMatrix(path);
+////    string solution = "0, 68, 65, 34, 37, 48, 26, 69, 14, 55, 60, 35, 19, 17, 38, 8, 59, 63, 15, 25, 47, 13, 11, 39, 30, 6, 64, 53, 66, 12, 67, 56, 33, 45, 22, 42, 18, 50, 54, 32, 1, 58, 20, 7, 46, 3, 9, 31, 16, 62, 5, 41, 24, 70, 44, 10, 61, 51, 52, 43, 28, 2, 40, 23, 27, 57, 49, 4, 36, 29, 21, 0,";
+////    checkPath(solution);
+////    cout<<matrix[0][1];
 //    startAnneling();//todo na potrzeby testowania
+
+//    cout<<endl<<"ftv55"<<endl;
+//    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\ftv55.atsp";
+//    readMatrix(path);
+//    startAnneling();
+//
+//    cout<<endl<<"ftv170"<<endl;
+//    path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\ftv170.atsp";
+//    readMatrix(path);
+//    startAnneling();
+
+    cout<<endl<<"rgb358"<<endl;
+    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp";
+    readMatrix(path);
+    startAnneling();
     return;
     while (true) {
         cout << "Czy chciałbyś wykonać testowanie automatyczne algorytmów dla wielu wartości? t/n" << endl
@@ -204,7 +219,7 @@ void  Test::deleteMatrix() {//todo na czas testów
 
 void Test::startAnneling() {
 //    Sa* simAnneling = new Sa(matrix, matrixSize, coolingFactor, maxTime);//todo to zostawic
-    Sa* simAnneling = new Sa(matrix, matrixSize, 0.995, 5*60);
+    Sa* simAnneling = new Sa(matrix, matrixSize, 0.998, 4*60);
 
     simAnneling->start();
     delete simAnneling;

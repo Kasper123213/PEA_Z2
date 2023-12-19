@@ -7,8 +7,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 add_executable(PEA2 main.cpp
         Test.cpp
         Test.h
-        SA/Sa.cpp
-        SA/Sa.h
+        algorithms/Sa.cpp
+        algorithms/Sa.h
         time/Time.cpp
         time/Time.cpp
-        )
+        algorithms/Ts.h algorithms/Ts.cpp)

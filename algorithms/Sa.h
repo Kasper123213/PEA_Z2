@@ -21,6 +21,7 @@ private:
     vector<int> bestPath;
     vector<int> currentPath;
     vector<int> testPath;
+
     void greedyAlg();
     double calcBeginningTemperature(int bestLen, double N);
     void calcLen();
