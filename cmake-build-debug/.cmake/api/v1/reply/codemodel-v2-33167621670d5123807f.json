@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2/cmake-build-debug",
-		"source" : "C:/Users/radom/OneDrive/Pulpit/PEA/PEA_Z2"
+		"build" : "C:/Users/radom/Desktop/PEA_Z2/cmake-build-debug",
+		"source" : "C:/Users/radom/Desktop/PEA_Z2"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 5
 	}
 }

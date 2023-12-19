@@ -19,7 +19,7 @@ Ts::Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime){
 
     for(int i=0;i<matrixSize;i++){
         for(int j=0;j<matrixSize;j++) {
-            tabuList[i].push_back(-1);
+            tabuList[i].push_back(0);
         }
     }
 }
@@ -30,13 +30,17 @@ Ts::~Ts(){}
 
 
 void Ts::start() {
+    vector<pair<int,int>> const changes = getChanges();
     Time* time = new Time();
     time->start();
     currentPath = bestPath;
     currentLen = bestLen;
+    pair<int, int> bestChange;
     int iterationCounter = 0;
     do{
+        //wybieranie sąsiadów
         while(true){
+            bestChange = findBestChange(changes);
 
         }
 
@@ -77,7 +81,7 @@ void Ts::greedyAlg(){
 
     //##############################################
     cout<<"Greedy: najlepsza path ";//todo usunąć
-    for(auto i:bestPath){
+    for(int i:bestPath){
         cout<<i<<", ";
     }
 
@@ -96,3 +100,66 @@ int Ts::calcCost(vector<int> path){
 
     return cost;
 }
+
+
+vector<pair<int, int>> Ts::getChanges(){
+    vector<pair<int, int>> changes;
+
+    for(int i = 0; i< matrixSize; i++){
+        for(int j = i; j< matrixSize; j++){
+            if(i==j)continue;
+            pair<int, int> pair = {i,j};
+            changes.push_back(pair);
+        }
+    }
+
+    return changes;
+}
+
+
+pair<int, int> Ts::findBestChange(vector<pair<int, int>> changes){
+    for(pair<int, int> change:changes){
+        if(tabuList[change.first][change.second]>0) continue;
+
+        testPath = currentPath;
+        doChange(change.first, change.second);
+    }
+}
+
+void Ts::doChange(int indexFirst, int indexSecond){//todo zrobic jakies sensowne wybierNie tego
+    doInsert(indexFirst, indexSecond);
+    doSwap(indexFirst, indexSecond);
+    doInvert(indexFirst, indexSecond);
+}
+//abcdefghi 2,5
+//abfcdeghi
+void Ts::doInsert(int indexFirst, int indexSecond){
+
+}
+
+
+void Ts::doSwap(int indexFirst, int indexSecond){
+
+}
+void Ts::doInvert(int indexFirst, int indexSecond){
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
