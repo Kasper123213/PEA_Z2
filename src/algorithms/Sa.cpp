@@ -8,12 +8,13 @@
 #include "Sa.h"
 #include "../time/Time.h"
 
-Sa::Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime) {//todo dodac reszte par tpu czas
+Sa::Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime, int coolingType) {//todo dodac reszte par tpu czas
     this->matrix = matrix;
     this->matrixSize = matrixSize;
     this->coolingFactor = coolingFactor;
     this->maxTime = maxTime;
-    beginningTemperature = calcBeginningTemperature(bestLen, 1);
+    this->coolingType = coolingType;
+
 
 }
 
@@ -24,10 +25,16 @@ Sa::~Sa(){
 
 
 void Sa::start(){
-    greedyAlg();
+    //na początku algorytmem chciwym wybierane jest początkowe rozwiązanie
+    greedyAlg();    //początkowa temperatura jest iloczynem kosztu najlepszego znalezionego rozwiązania oraz pewnego wspolczynnika
+    beginningTemperature = bestLen * 1.5;
+    cout<<"T początkowa "<<beginningTemperature<<endl;
+    //długość epoki również jest zależna od wielkości problemu
+    eraLen = matrixSize * 3;
+    //inicjalizujemy generator liczb losowych w przedziale 0-1
     random_device rd;
     mt19937 gen(rd());
-    uniform_real_distribution<> dis(0, 1);	// uniform distribution between 0 and 1
+    uniform_real_distribution<> dis(0, 1);
 
 
     currentPath = bestPath;
@@ -35,59 +42,64 @@ void Sa::start(){
 
     currentLen = bestLen;
     testLen = bestLen;
-    int greedyLen = bestLen;//todo greedylen
+
+    int greedyLen = bestLen;
+    //na potrzeby dokladnego zbadania problemu zainicjalizowane zmienne opisujące 4 rozwiązania.
+    //wynik algorytmu chciwego - greedy*, najlepsze znalezione rozwiązanie - best*,
+    //rozwiązanie którego sąsiadów badamy - current* oraz rozwiązanie którego akceptacje rozważamy test*
     double currentTemperature = beginningTemperature;
-    int eraLen = calcEra(matrixSize, 30);//todo sprawdzic alpha
     int eraNumber = 0;
     pair<int, int> swappedPoints;
+    //inicjalizujemy stoper oraz zaczynamy odliczać na nim czas
     Time* time = new Time();
     time->start();
+    timeOfBestSolution = time->getTime();
     do{
+        //w każdej epoce jest jednakowa ilość iteracji przy jednakowej temperaturze
         for(int era=0;era<eraLen;era++){
 
-//            cout<<"##################################"<<endl;
             testPath = currentPath;
+            //losujemy punkty których zamiana określi nam kolejnego sąsiada
             swappedPoints = generateSwapPoints();
+            //przechodzimy do owego sąsiada
             swapPoints(swappedPoints);
+            //oraz liczymy jego koszt
             calcLen();
 
-//            for(auto x: testPath){
-//                cout<<x<<", ";
-//            }
-//            cout<<" dlugosc: "<<testLen<<endl;
-
+            //obliczamy różnice kosztów sąsiada i obecnego rozwiązania
             int delta = testLen - currentLen;
 
+            //jeśli sąsiad ma mniejszy koszt, przechodzimy do niego
             if(delta<=0) {
                 currentLen = testLen;
                 currentPath = testPath;
-                if(currentLen<bestLen){//todo usunąćte niedozwolone triki chyba
+                //sprawdzamy czy obecne rozwiązanie nie jest najlepszym dotychczas znalezionym
+                if(currentLen<bestLen){
                     bestLen = currentLen;
                     bestPath = currentPath;
+                    timeOfBestSolution = time->getTime();
                 }
             }else{
+                //jeśli sąsiad ma siększy koszt niż nasze rozwiązanie i tak ma szansę być nowym rozwiązaniem
+                // Sprawdzamy to przy pomocy generatora liczb pseudolosowych
                 double randomValue = dis(gen);
+                //ze wzoru sprawdzamy czy koszt (energia) mieści się w akceptowanych wylosowanych przez nas granicach
                 if (randomValue < exp(-delta / currentTemperature)){
-//                    cout<<"Zmieniammm"<<endl;
                     currentLen = testLen;
                     currentPath = testPath;
                 }
             }
         }
-//        for(auto x: currentPath){
-//            cout<<x<<", ";
-//        }
-//        cout<<" dlugosc: "<<currentLen<< endl<<"temperatura: "<< currentTemperature<<endl;
-//        cout<<"##########################"<<endl;
-
-
+        //inkrementujemy nimer epoki oraz wyliczamy nową temperaturę
         eraNumber++;
         currentTemperature = calcNewTemperature(currentTemperature, eraNumber);
-    }while(currentTemperature>=pow(10,-9) and time->getTime()<=maxTime);//todo ptzemyslec czy pow(10,-15)
+        //Jeśli temperatura przekroczyła pewien poziom zatrzymujemy algorytm gdyż szanse, że przyniesie nam
+        // lepsze rozwiązanie zmniejszają sie wraz z temperaturą
+        //drógim warunkiem jest przekroczenie preferowanego przez nas czasu działania algorytmu
+    }while(currentTemperature>=pow(10,-9) and time->getTime()<=maxTime);
 
     cout<<"Juz po wyrzazeniu"<<endl;
-//    cout<<"Czas to: "<<time->getTime()<<" a oczekiwany to : "<<maxTime<<endl;//todo to do  przeniesienia
-//    cout<<"Temperatura to: "<<currentTemperature<<endl;//todo to do  przeniesienia
+    cout<<"czas "<<time->getTime()<<" a mial byc "<<maxTime<<endl;
     cout<<"CurrentPath : ";
     for(int i:currentPath){
         cout<<i<<", ";
@@ -95,14 +107,17 @@ void Sa::start(){
     cout<<endl<<"currentLen: "<<currentLen<<endl;
     cout<<"greedylen to :"<<greedyLen<<endl;
     cout<<"bestlen to :"<<bestLen<<endl;
+    cout<<"Znaleziono je wtedy: "<<timeOfBestSolution<<endl;
+    cout<<"T koncowa"<<currentTemperature<<endl;
+    cout<<"liczba epok: "<<eraNumber<<endl<<endl<<endl;
 
-
+    //dealokujemy nie potrzebny nam już miernik czasu
     delete time;
 }
 
 
 
-
+//algorytm chciwy
 void Sa::greedyAlg(){
     int currentCity = 0;
     bestPath.push_back(currentCity);
@@ -110,12 +125,16 @@ void Sa::greedyAlg(){
     int nextCity;
     int minLen = INT_MAX;
 
+    //dopuki ścieżka niema zawiera wszywtkich wierzchołków grafu, pętla trwa
     while(size(bestPath)!=matrixSize){
         minLen=INT_MAX;
+        //przeglądamy wszystkie krawędzie wychodzące z pierwszego wierzchołka
         for(int i=0;i<matrixSize;i++){
+            //sprawdzamy czy dany wierzchołek był już odwiedzony
             auto it = find(bestPath.begin(), bestPath.end(), i);
-
+            //jeśli był, idziemy do kolejnego
             if(it!=bestPath.end()) continue;
+            //jeśli niema go na liście sprawdzamy czy krawędź do niego jest mniejsza niż najmniejsza znalezniona
             else{
                 if(matrix[currentCity][i]<minLen){
                     nextCity = i;
@@ -127,46 +146,43 @@ void Sa::greedyAlg(){
         bestLen+=minLen;
         currentCity = nextCity;
     }
+    //na końcu dodajemy powrót do początkowego wierzchołka aby powstał cykl
     bestPath.push_back(0);
+    //zwiększamy również odpowiednio długość znalezionego cyklu
     bestLen+=matrix[currentCity][0];
 
-    //##############################################
-    cout<<"Greedy: najlepsza path ";//todo usunąć
-    for(auto i:bestPath){
-        cout<<i<<", ";
-    }
-
-    cout<<"len: "<<bestLen<<endl;
-    cout<<"temperatura to: "<<beginningTemperature;
-    //##############################################
-
 }
 
 
-double Sa::calcBeginningTemperature(int bestLen, double N){
-    double x = bestLen*N;
-    return x;
-}
 
 
+//metoda obliczająca nową temperaturę w zależności od wybranego typu chłlodzenia
 double Sa::calcNewTemperature(double T, int eraNumber){
-    return calcGeometricTemp(T);
-//    return calcLogaritmicTemp(T, eraNumber);
-//    return calcExpotentialTemp(T, eraNumber);
-}
+    switch (coolingType) {
+        case 1:
+            return calcGeometricTemp(T);
+        case 2:
+            return calcLogaritmicTemp(T, eraNumber);
+        case 3:
+            return calcExpotentialTemp(T, eraNumber);
 
+    }
+    return 0;
+}
+//chłodzenie geometryczne
 double Sa::calcGeometricTemp(double T){
     return T*coolingFactor; //*0.995 dla 5 minut
 }
-
+//chłodzenie logarytmiczne
 double Sa::calcLogaritmicTemp(double T, int eraNumber){
     return T/(1+coolingFactor*log(eraNumber+1));
 }
-
+//chłodzenie wykładnicze
 double Sa::calcExpotentialTemp(double T, int eraNumber){
     return pow(coolingFactor, eraNumber)*T;
 }
 
+//funkcja generuje dwa losowe indeksy do zamienienia wierzchołków miejscami w cyklu
 pair<int, int> Sa::generateSwapPoints(){
     random_device rd;
     mt19937 gen(rd());
@@ -174,30 +190,25 @@ pair<int, int> Sa::generateSwapPoints(){
 
     int indexI = (int)(dis(gen) * matrixSize);
     int indexJ = (int)(dis(gen) * matrixSize);
-//    int indexJ;
-//    if(indexI==matrixSize-1){
-//        indexJ = 0;
-//    }else{
-//        indexJ = indexI+1;
-//    }
 
+//    jeśli wylosują się punkty o tej samej wartosci powtarzamy proces
     if(indexJ!=indexI) {
         pair<int, int> swapped(indexI, indexJ);
         return swapped;
     }else{
         return generateSwapPoints();
     }
-//        pair<int, int> swapped(indexI, indexJ);
-//        return swapped;
-
 }
 
+//funkcja zamienia punkty miejscami
 void Sa::swapPoints(pair<int, int> swappedPoints){
 
     int i = swappedPoints.first;
     int j = swappedPoints.second;
 
     swap(testPath[i], testPath[j]);
+    //jeśli któryś z pynktów ma indeks 0
+    // musimy zwrócić uwage aby również ostatni wierzchołek cyklu zamienić
     if(i == 0 or j==0){
         testPath[matrixSize] = testPath[0];
     }
@@ -205,6 +216,7 @@ void Sa::swapPoints(pair<int, int> swappedPoints){
 
 }
 
+//wyliczamy koszt danego cyklu dodając wagi krawędzi
 void Sa::calcLen(){
     testLen = 0;
     for(int i = 0; i< matrixSize; i++){
@@ -213,8 +225,3 @@ void Sa::calcLen(){
 
 }
 
-
-
-int Sa::calcEra(int size, double alpha){
-    return size*alpha;
-}

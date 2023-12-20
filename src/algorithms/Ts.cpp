@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <random>
 #include "Ts.h"
 #include "../time/Time.h"
 
@@ -15,7 +16,7 @@ Ts::Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime){
     this->neighbourhood = neighbourhood;
     this->maxTime = maxTime;
     tabuLen = matrixSize * 1.5;
-    iterationStopCondition = 1000000;
+    iterationStopCondition = 100;
 
     for(int i=0;i<matrixSize;i++){
         tabuList.push_back({});
@@ -56,18 +57,32 @@ void Ts::startSearching() {
 
         tabuList[bestPair.first][bestPair.second] = tabuLen;
         iterationCounter++;
-    }while(time->getTime()<maxTime);
-//    }while(iterationCounter<iterationStopCondition and time->getTime()<maxTime);
 
-    cout<<"Juz po tabu"<<endl;
-//    cout<<"Czas to: "<<time->getTime()<<" a oczekiwany to : "<<maxTime<<endl;//todo to do  przeniesienia
-    cout<<"currentPath: ";
-    for(int i:currentPath){
-        cout<<i<<", ";
-    }
-    cout<<endl<<"currentLen: "<<currentLen<<endl;
-    cout<<"greedylen to :"<<greedyLen<<endl;
-    cout<<"bestlen to :"<<bestLen<<endl;
+        //mechanizm mający zapewnić dywersyfikacje
+        if(iterationCounter<iterationStopCondition){
+            iterationCounter = 0;
+            clearTabu();
+
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_real_distribution<> dis(0, changes.size()-1);
+
+            pair<int, int> randomchoice = changes[dis(gen)];
+
+            doChange(randomchoice.first, randomchoice.second);
+
+        }
+    }while(time->getTime()<maxTime);
+
+//    cout<<"Juz po tabu"<<endl;
+////    cout<<"Czas to: "<<time->getTime()<<" a oczekiwany to : "<<maxTime<<endl;//todo to do  przeniesienia
+//    cout<<"currentPath: ";
+//    for(int i:currentPath){
+//        cout<<i<<", ";
+//    }
+//    cout<<endl<<"currentLen: "<<currentLen<<endl;
+//    cout<<"greedylen to :"<<greedyLen<<endl;
+//    cout<<"bestlen to :"<<bestLen<<endl;
 
     delete time;
 }
@@ -102,12 +117,12 @@ void Ts::greedyAlg(){
     bestLen+=matrix[currentCity][0];
 
     //##############################################
-    cout<<"Greedy: najlepsza path ";//todo usunąć
-    for(int i:bestPath){
-        cout<<i<<", ";
-    }
-
-    cout<<endl<<"len: "<<bestLen<<endl;
+//    cout<<"Greedy: najlepsza path ";//todo usunąć
+//    for(int i:bestPath){
+//        cout<<i<<", ";
+//    }
+//
+//    cout<<endl<<"len: "<<bestLen<<endl;
     //##############################################
 
 }
@@ -259,9 +274,11 @@ void Ts::calcCost(){
 
 }
 
-
-
-
+void Ts::clearTabu(){
+    for(vector<int> v: tabuList){
+        v.clear();
+    }
+}
 
 
 

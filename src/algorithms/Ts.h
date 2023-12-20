@@ -16,12 +16,8 @@ private:
     int neighbourhood;//1 insert 2 swap 3 invert
     int maxTime;
     int tabuLen;
-    int bestLen;
     int iterationStopCondition;
-    int currentLen; //stan w ktorym teraz przebywamy
     int testLen;//stan do sprawdzenia
-    vector<int> bestPath;
-    vector<int> currentPath;
     vector<int> testPath;
     vector<vector<int>> tabuList;
 
@@ -33,10 +29,17 @@ private:
     void doSwap(int indexFirst, int indexSecond);
     void doInvert(int indexSmaller, int indexBigger);
     void calcCost();
+    void clearTabu();
 public:
     void startSearching();
     Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime);
     ~Ts();
+
+    int currentLen; //stan w ktorym teraz przebywamy
+    int bestLen;
+    vector<int> bestPath;
+    vector<int> currentPath;
+
 };
 
 

@@ -9,48 +9,6 @@ Test::Test() {
     //zmienna przechowująca decyzje użytkownika o uruchomieniu testu automatycznegp
     char choice;
 
-//    readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
-
-//    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z1\\tsp.txt";
-////    ftvReader* f;
-//    readMatrix(path);
-////    string solution = "0, 68, 65, 34, 37, 48, 26, 69, 14, 55, 60, 35, 19, 17, 38, 8, 59, 63, 15, 25, 47, 13, 11, 39, 30, 6, 64, 53, 66, 12, 67, 56, 33, 45, 22, 42, 18, 50, 54, 32, 1, 58, 20, 7, 46, 3, 9, 31, 16, 62, 5, 41, 24, 70, 44, 10, 61, 51, 52, 43, 28, 2, 40, 23, 27, 57, 49, 4, 36, 29, 21, 0,";
-////    checkPath(solution);
-////    cout<<matrix[0][1];
-//    startAnneling();//todo na potrzeby testowania
-
-    cout<<endl<<"ftv55"<<endl;
-//    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\ftv55.atsp";
-
-
-
-    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z1\\tsp.txt";
-    readMatrix(path);
-    path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z1\\tsp_10.txt";
-    readMatrix(path);
-//    startTabuSearch();
-//    cout<<endl<<endl<<endl<<"#####################################################"<<endl<<"Teraz SA"<<endl
-//    <<"#####################################################"<<endl<<endl<<endl;
-
-
-//    startAnneling();
-
-
-
-//    cout<<endl<<"ftv170"<<endl;
-//    path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\ftv170.atsp";
-//    readMatrix(path);
-//    startAnneling();
-
-//    cout<<endl<<"rgb358"<<endl;
-//    string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp";
-//    readMatrix(path);
-//    startAnneling();
-
-
-
-
-    return;
     while (true) {
         cout << "Czy chciałbyś wykonać testowanie automatyczne algorytmów dla wielu wartości? t/n" << endl
              << "(Opcja do generowania sprawozdania). Aby wyjść naciśnij dowolną inną literę" <<endl;
@@ -58,10 +16,9 @@ Test::Test() {
         cin >> choice;
         cout<<endl;
 
-//        system("cls");//todo zostawic to
 
         if (choice == 't' or choice == 'T') {
-//            startAutoTesting();
+//            startAutoTesting(); //todo
         } else if (choice == 'n' or choice == 'N') {
             startTest();
         } else {
@@ -73,26 +30,64 @@ Test::Test() {
 
 //destruktor klasy Test służy do zwolnienia miejsca w pamięci zajmowanej przez macierz sąsiedstwa grafu
 Test::~Test() {
-    //todo dorobic destruktor
     deleteMatrix();
 }
 
 
 void Test::pokazDane(){
     if(fileName!="")cout<<"Nazwa Pliku: "<<fileName<<endl;
-    if(maxTime!=-1)cout<<"Kryterium Stopu : "<<maxTime<<endl;
-    if(neighbours!="")cout<<"Wybor Sasiedstwa: "<<neighbours<<endl;
-    if(coolingFactor!=-1)cout<<"Współczynnik Zmiany Temperatury: "<<coolingFactor<<endl;
+    if(maxTime!=0)cout<<"Kryterium Stopu : "<<maxTime<<"s"<<endl;
+    if(neighbourhood!=0){
+        cout<<"Wybor Sasiedstwa: ";
+        switch (neighbourhood){
+            case 1:
+                cout<<"Insert"<<endl;
+                break;
+            case 2:
+                cout<<"Swap"<<endl;
+                break;
+            case 3:
+                cout<<"Invert"<<endl;
+                break;
+        }
+    }
+    if(coolingFactor!=0)cout<<"Współczynnik Zmiany Temperatury: "<<coolingFactor<<endl;
+    if(coolingType!=0){
+        cout<<"Rodzaj Zmiany Temperatury: "<<coolingFactor;
+        switch (coolingType){
+            case 1:
+                cout<<"Geometryczny"<<endl;
+                break;
+            case 2:
+                cout<<"Logarytmiczny"<<endl;
+                break;
+            case 3:
+                cout<<"Wykładniczy"<<endl;
+                break;
+        }
+    }
+
+    cout<<"_____________________________________________________________________________________"<<endl;
 }
 
 //uruchomienie testów algorytmu
 void Test::startTest(){
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp");
+    neighbourhood =1;
+    maxTime = 10;
 
+    coolingType = 1;
+    coolingFactor = 0.99;
+
+    startAnneling();
+//    saveSolution();
+//    cout<<"Długość cyklu to: "<<checkPath("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\cmake-build-debug\\solution1.txt")<<endl;
+    return;
     while (true){
         pokazDane();
 
         cout << "Co chcesz zrobić?\n"
-             "1.Wczytanie danych z pliku\n"
+             "1.Wczytanie grafu z pliku\n"
              "2.Wprowadzenie kryterium stopu (wspólne dla obu algorytmów)\n"
              "3.Wybór sąsiedztwa\n"
              "4.Uruchomianie algorytmu TS\n"
@@ -100,160 +95,122 @@ void Test::startTest(){
              "6.Uruchomianie algorytmu SW\n"
              "7.Zapis ścieżki rozwiązania do pliku txt\n"
              "8.Wczytanie ścieżki rozwiązania z pliku txt i obliczenie na drogi na podstawie wczytanej tabeli kosztów\n"
-             "0.Wyjście" << endl
-             <<"9.wczytj z txt" << endl;//todo na czas testów
+             "9.Wybieranie typu schładzania\n"
+             "0.Wyjście" << endl;
         //wybór czynności przez użytkownika
         int choice;
         cout<<">>";
         cin >> choice;
         cout<<endl;
 
-        string sciezka;
+        string path;
 
         int ukosnikPos;
         switch (choice) {
             case 1:
-//                system("cls");//todo zostawic to
-                cout<<"Podaj ścieżkę do pliku:\n>>";
-                cin>>sciezka;
+                cout<<"Podaj ścieżkę do pliku zawierającego reprezentację grafu:\n>>";
+                cin>>path;
 
-                ukosnikPos = sciezka.rfind('/');
-                if(ukosnikPos==string::npos)ukosnikPos = sciezka.rfind('\\');
-                fileName = sciezka.substr(ukosnikPos+1);
+                if(readMatrix(path)) {
+                    ukosnikPos = path.rfind('/');
+                    if (ukosnikPos == string::npos)ukosnikPos = path.rfind('\\');
+                    fileName = path.substr(ukosnikPos + 1);
+                }else{
+                    cout<<"Nie można wczytać ścieżki"<<endl;
+                }
                 break;
             case 2:
-//                system("cls");//todo zostawic to
                 cout<<"Podaj czas po jakim algorytm ma zakończyć działanie (w sekundach)"<<endl<<">>";
                 cin>>maxTime;
                 break;
             case 3:
-                //todo jesli zrobie TS
+                cout<<"Wybierz metode generowania sąsiedstwa"<<endl
+                <<"1. Insert"<<endl
+                <<"2. Swap"<<endl
+                <<"3. Invert\n>>";
+                cin>>neighbourhood;
                 break;
             case 4:
-                //todo jesli zrobie TS
+                if(neighbourhood!=0 and maxTime>0 and matrixSize>0) {
+                    cout << "Uruchamiam algorytm Tabu Search...\n";
+                    startTabuSearch();
+                }else{
+                    cout<<"Nie podano wszystkich wymaganych parametrów.\n";
+                }
                 break;
             case 5:
-//                system("cls");//todo zostawic to
                 cout<<"Podaj wspolczynnik zmiany temperatury"<<endl<<">>";
                 cin>>coolingFactor;
                 break;
             case 6:
-//                if(coolingFactor!=-1 and maxTime!=-1) {
-                    startAnneling();
-//                }
-//                else{
-//                    cout<<"Uzupełnij dane do algorytmu"<<endl;
-//                }
+                if(coolingFactor!=0 and maxTime>0 and matrixSize>0 and coolingType!=0) {
+                    if((coolingType = 1 or coolingType==3) and coolingFactor>=1){
+                        cout<<"Przy tym typie chłodzenia współczynnik chłodzenia powinien być mniejszy od 1"<<endl;
+                        break;
+                    }else {
+                        cout << "Uruchamiam algorytm Symulowanego wyżarzania...\n";
+                        startAnneling();
+                    }
+                }
+                else{
+                    cout<<"Nie podano wszystkich wymaganych parametrów.\n";
+                }
                 break;
             case 7:
+                if(bestSolutionPath.empty())cout<<"Nie zapisano żadnego rozwiązania"<<endl;
+                else saveSolution();
                 break;
             case 8:
+                cout<<"Podaj ścieżkę do pliku z cyklem Hamiltona dla wczytanego wcześniej grafu"<<endl<<">>";
+                cin>>path;
+                cout<<"Długość cyklu to: "<<checkPath(path)<<endl;
                 break;
-            case 9://todo na czas testów
-                readFromFile("C:\\Users\\radom\\Desktop\\PEA2\\z1\\tsp.txt");
+            case 9:
+                cout<<"Wybierz typ zmiany temperatury"<<endl<<">>";
+                cin>>coolingType;
                 break;
             default:
-//                system("cls");//todo zostawic to
                 return;
         }
-//        system("cls");//todo zostawic to
     }
 }
 
-
-void Test::readFromFile(string path)  {//todo na czas testów
-
-    // Otwórz plik
-    ifstream file(path);
-
-    // Sprawdź, czy udało się otworzyć plik
-    if (!file.is_open()) {
-        cout << "Nie można otworzyc." << endl;
-    }
-
-    // Zmienna przechowująca wartość wczytaną z pliku
-    int wartoscZPliku;
-
-    // Wyczyść flagi błędów i pozycję odczytu pliku
-    file.clear();
-    file.seekg(0, ios::beg);
-
-    int i = 0;
-    int j = 0;
-    while (file >> wartoscZPliku) {
-
-        if (i == 0) {
-            //tworzenie tabeli ścieżek
-            matrixSize = wartoscZPliku;
-            matrix = new int *[matrixSize]; // Deklaracja tablicy wskaźników na wskaźniki do int
-
-            for (int i = 0; i < matrixSize; ++i) {
-                matrix[i] = new int[matrixSize]; // Alokacja pamięci dla każdego wiersza
-            }
-
-        } else {
-            if (i > matrixSize) {
-                j += 1;
-                i = 1;
-            }
-
-
-            matrix[j][i - 1] = wartoscZPliku;
-
-        }
-
-        i++;
-    }
-    file.close();
-    printMatrix();
-}
-
-void Test::printMatrix() {//todo na czas testów
-    if(matrixSize==0){
-        cout<<"Tablica jest pusta"<<endl<<endl;
-        return;
-    }
-    cout << "Tabela sąsiedstwa z wagami:" << endl;
-    for (int i = 0; i < matrixSize; i++) {
-        for (int j = 0; j < matrixSize; j++) {
-            cout << matrix[i][j] << "\t";
-        }
-        cout << endl;
-    }
-    cout << "Rozmiar grafu: " << matrixSize << endl<<endl;
-}
 
 //usuwanie macierzy sąsiedstwa z pamięci
-void  Test::deleteMatrix(){//todo na czas testów
+void  Test::deleteMatrix(){
     if(matrixSize!=0 ) {
         for (int i = 0; i < matrixSize; i++) {
             delete[] matrix[i];
         }
-
         matrixSize = 0;
-
     }
     delete[] matrix;
 }
 
+//rozpoczęcie wyżarzania
 void Test::startAnneling() {
-//    Sa* simAnneling = new Sa(matrix, matrixSize, coolingFactor, maxTime);//todo to zostawic
-    Sa* simAnneling = new Sa(matrix, matrixSize, 0.998, 20);
+    Sa* simAnneling = new Sa(matrix, matrixSize, coolingFactor, maxTime, coolingType);
 
     simAnneling->start();
+    bestSolutionLen=simAnneling->bestLen;
+    bestSolutionPath=simAnneling->bestPath;
+
     delete simAnneling;
 }
 
-
+//rozpoczęcie tabu search
 void Test::startTabuSearch(){
-    Ts* tabuSearch = new Ts(matrix, matrixSize, 2, 10);
+    Ts* tabuSearch = new Ts(matrix, matrixSize, neighbourhood, maxTime);
 
     tabuSearch->startSearching();
+    bestSolutionLen=tabuSearch->bestLen;
+    bestSolutionPath=tabuSearch->bestPath;
     delete tabuSearch;
 }
 
-void Test::readMatrix(string path){
-//    if(matrixSize!=0) deleteMatrix();
+//wczytanie macierzy sąsiedstwa z pliku
+bool Test::readMatrix(string path){
+    if(matrixSize!=0) deleteMatrix();
 
     int size{};
     // Otwórz plik
@@ -261,7 +218,7 @@ void Test::readMatrix(string path){
 
     // Sprawdź, czy udało się otworzyć plik
     if (!file.is_open()) {
-        cout << "Nie można otworzyc." << endl;
+        return false;
     }
 
     // Zmienna przechowująca wartość wczytaną z pliku
@@ -289,6 +246,7 @@ void Test::readMatrix(string path){
                 matrix[i] = new int[size];
             }
             readSize = false;
+            matrixSize = size;
         }
 
         if (word.find("EDGE_WEIGHT_SECTION") != string::npos) {
@@ -310,38 +268,71 @@ void Test::readMatrix(string path){
 
     }
     file.close();
-    cout<<endl<<matrixSize<<endl<<matrix[0][1]<<endl;
-    printMatrix();
+    return true;
+}
 
-//    for(int i=0;i<y;i++){
-//        for(int j=0;j<y;j++){
-//            cout<<matrix[i][j]<<", ";
-//        }
-//        cout<<endl<<"########################################"<<endl;
-//    }
+//znalezienie kosztu podanej ścieżki
+int Test::checkPath(string path){
+    int len = 0;
+
+    int lastCity=-1;
+    int currentCity=-1;
+    // Otwarcie pliku do odczytu
+    ifstream file(path);
+
+    // Sprawdzenie, czy plik został otwarty poprawnie
+    if (!file.is_open()) {
+        cout << "Błąd podczas otwierania pliku." << endl;
+    }
+    int size;
+    file >> size;
+    file>> lastCity;
+
+    while (file >> currentCity) {
+        len+=matrix[lastCity][currentCity];
+
+        lastCity = currentCity;
+    }
 
 
+    // Zamknięcie pliku
+    file.close();
 
+    return len;
 }
 
 
-void Test::checkPath(string solution){
-    std::vector<int> numbers;
-    std::stringstream ss(solution);
-    int number;
 
-    // Wczytaj liczby ze stringa do wektora
-    while (ss >> number) {
-        numbers.push_back(number);
+//zapisanie rozwiązania do pliku
+void Test::saveSolution(){
+    int index = 1;
+    string name ;
+    while(true){
+        name = "solution" + to_string(index) + ".txt";
 
-        // Jeśli następny znak to przecinek, zignoruj go
-        if (ss.peek() == ',')
-            ss.ignore();
+        ifstream file(name);
+        if(not file.good()) break;
+        index++;
     }
 
-    int sum = 0;
-    for(int i=0; i<numbers.size()-1;i++){
-        sum+=matrix[numbers[i]][numbers[i+1]];
+    string solutionFile = name;
+
+    // Otwarcie pliku w trybie do zapisu (truncation)
+    ofstream file(solutionFile, ios::trunc);
+
+    // Sprawdzenie, czy plik został otwarty poprawnie
+    if (file.is_open()) {
+        file << bestSolutionPath.size()-1 << endl;
+
+        for(int i:bestSolutionPath){
+            file << i <<endl;
+        }
+
+        // Zamknięcie pliku
+        file.close();
+
+        cout << "Zapisano do pliku." << endl;
+    } else {
+        cout << "Błąd podczas otwierania pliku." << endl;
     }
-    cout<<"Długość podanej ścieżki to: "<<sum<<endl;
 }

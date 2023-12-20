@@ -10,20 +10,22 @@ using namespace std;
 class Test {
 private:
     string fileName="";
-    int maxTime=-1;
-    string neighbours="";
-    double coolingFactor=-1;
+    int maxTime=0;
+    int neighbourhood=0;//1 insert 2 swap 3 invert
+    double coolingFactor=0;
+    int coolingType=0;
     int matrixSize=0;
     int **matrix{};
+    int bestSolutionLen;
+    vector<int> bestSolutionPath;
     void pokazDane();
     void startTest();
-    void readFromFile(string path);//todo na czas testów
-    void deleteMatrix();//todo na czas testów
-    void printMatrix();//todo na czas testów
+    void deleteMatrix();
     void startAnneling();
     void startTabuSearch();
-    void readMatrix(string path);
-    void checkPath(string solution);
+    bool readMatrix(string path);
+    int checkPath(string path);
+    void saveSolution();
 public:
     Test();
     ~Test();
