@@ -7,7 +7,7 @@
 #include "Test.h"
 
 using namespace std;
-
+void read(string path);
 int main() {
     SetConsoleOutputCP(CP_UTF8);    //ustawianie polskich znaków
 
@@ -20,6 +20,14 @@ int main() {
 
     //zwolnienie pamięci po objekcie test i wywołanie jego destruktora
     delete test;
+
+//    int** matrix;
+//    read("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\xml\\berlin52.xml");
+}
+
+
+
+void read(string path){
 
 }
 

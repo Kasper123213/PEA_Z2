@@ -13,7 +13,7 @@ private:
     int maxTime=-1;
     string neighbours="";
     double coolingFactor=-1;
-    int matrixSize{};
+    int matrixSize=0;
     int **matrix{};
     void pokazDane();
     void startTest();

@@ -26,15 +26,17 @@ Test::Test() {
 
     string path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z1\\tsp.txt";
     readMatrix(path);
-    startTabuSearch();
-    cout<<endl<<endl<<endl<<"#####################################################"<<endl<<"Teraz SA"<<endl
-    <<"#####################################################"<<endl<<endl<<endl;
+    path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z1\\tsp_10.txt";
+    readMatrix(path);
+//    startTabuSearch();
+//    cout<<endl<<endl<<endl<<"#####################################################"<<endl<<"Teraz SA"<<endl
+//    <<"#####################################################"<<endl<<endl<<endl;
+
+
+//    startAnneling();
 
 
 
-
-    startAnneling();
-//
 //    cout<<endl<<"ftv170"<<endl;
 //    path = "C:\\Users\\radom\\OneDrive\\Pulpit\\PEA\\PEA_Z2\\z2_z3\\ATSP\\ftv170.atsp";
 //    readMatrix(path);
@@ -160,6 +162,7 @@ void Test::startTest(){
 
 
 void Test::readFromFile(string path)  {//todo na czas testów
+
     // Otwórz plik
     ifstream file(path);
 
@@ -221,7 +224,7 @@ void Test::printMatrix() {//todo na czas testów
 }
 
 //usuwanie macierzy sąsiedstwa z pamięci
-void  Test::deleteMatrix() {//todo na czas testów
+void  Test::deleteMatrix(){//todo na czas testów
     if(matrixSize!=0 ) {
         for (int i = 0; i < matrixSize; i++) {
             delete[] matrix[i];
@@ -250,6 +253,8 @@ void Test::startTabuSearch(){
 }
 
 void Test::readMatrix(string path){
+//    if(matrixSize!=0) deleteMatrix();
+
     int size{};
     // Otwórz plik
     ifstream file(path);
@@ -305,6 +310,8 @@ void Test::readMatrix(string path){
 
     }
     file.close();
+    cout<<endl<<matrixSize<<endl<<matrix[0][1]<<endl;
+    printMatrix();
 
 //    for(int i=0;i<y;i++){
 //        for(int j=0;j<y;j++){
@@ -312,7 +319,7 @@ void Test::readMatrix(string path){
 //        }
 //        cout<<endl<<"########################################"<<endl;
 //    }
-    matrixSize = y;
+
 
 
 }
