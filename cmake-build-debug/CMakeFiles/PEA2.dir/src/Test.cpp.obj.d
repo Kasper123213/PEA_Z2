@@ -155,4 +155,5 @@ CMakeFiles/PEA2.dir/src/Test.cpp.obj: \
  C:/PROGRA~1/JETBRA~1/CLION2~1.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ctime \
  C:/PROGRA~1/JETBRA~1/CLION2~1.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/parse_numbers.h \
  C:\Users\radom\OneDrive\Pulpit\PEA_Z2\src\algorithms/Sa.h \
- C:\Users\radom\OneDrive\Pulpit\PEA_Z2\src\algorithms/Ts.h
+ C:\Users\radom\OneDrive\Pulpit\PEA_Z2\src\algorithms/Ts.h \
+ C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/time/Time.h

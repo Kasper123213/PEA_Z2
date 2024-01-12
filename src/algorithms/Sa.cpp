@@ -14,28 +14,24 @@ Sa::Sa(int **matrix, int matrixSize, double coolingFactor, int maxTime, int cool
     this->coolingFactor = coolingFactor;
     this->maxTime = maxTime;
     this->coolingType = coolingType;
-
-
 }
-
-
 
 Sa::~Sa(){
 }
 
-
 void Sa::start(){
-    //na początku algorytmem chciwym wybierane jest początkowe rozwiązanie
-    greedyAlg();    //początkowa temperatura jest iloczynem kosztu najlepszego znalezionego rozwiązania oraz pewnego wspolczynnika
-    beginningTemperature = bestLen * 1.5;
-    cout<<"T początkowa "<<beginningTemperature<<endl;
-    //długość epoki również jest zależna od wielkości problemu
-    eraLen = matrixSize * 3;
-    //inicjalizujemy generator liczb losowych w przedziale 0-1
     random_device rd;
     mt19937 gen(rd());
     uniform_real_distribution<> dis(0, 1);
 
+    pair<int, int> swappedPoints;
+    //na początku algorytmem chciwym wybierane jest początkowe rozwiązanie
+    greedyAlg();    //początkowa temperatura jest iloczynem kosztu najlepszego znalezionego rozwiązania oraz pewnego wspolczynnika
+    beginningTemperature = calcBeginTemperature();
+//    cout<<"T początkowa "<<beginningTemperature<<endl;
+    //długość epoki również jest zależna od wielkości problemu
+    eraLen = matrixSize * (matrixSize -1) / 2;
+    //inicjalizujemy generator liczb losowych w przedziale 0-1
 
     currentPath = bestPath;
     testPath = bestPath;
@@ -43,13 +39,12 @@ void Sa::start(){
     currentLen = bestLen;
     testLen = bestLen;
 
-    int greedyLen = bestLen;
-    //na potrzeby dokladnego zbadania problemu zainicjalizowane zmienne opisujące 4 rozwiązania.
-    //wynik algorytmu chciwego - greedy*, najlepsze znalezione rozwiązanie - best*,
+    //na potrzeby dokladnego zbadania problemu zainicjalizowane zmienne opisujące 3 rozwiązania.
+    //najlepsze znalezione rozwiązanie - best*,
     //rozwiązanie którego sąsiadów badamy - current* oraz rozwiązanie którego akceptacje rozważamy test*
     double currentTemperature = beginningTemperature;
     int eraNumber = 0;
-    pair<int, int> swappedPoints;
+
     //inicjalizujemy stoper oraz zaczynamy odliczać na nim czas
     Time* time = new Time();
     time->start();
@@ -96,25 +91,10 @@ void Sa::start(){
         //Jeśli temperatura przekroczyła pewien poziom zatrzymujemy algorytm gdyż szanse, że przyniesie nam
         // lepsze rozwiązanie zmniejszają sie wraz z temperaturą
         //drógim warunkiem jest przekroczenie preferowanego przez nas czasu działania algorytmu
-    }while(currentTemperature>=pow(10,-9) and time->getTime()<=maxTime);
-
-    cout<<"Juz po wyrzazeniu"<<endl;
-    cout<<"czas "<<time->getTime()<<" a mial byc "<<maxTime<<endl;
-    cout<<"CurrentPath : ";
-    for(int i:currentPath){
-        cout<<i<<", ";
-    }
-    cout<<endl<<"currentLen: "<<currentLen<<endl;
-    cout<<"greedylen to :"<<greedyLen<<endl;
-    cout<<"bestlen to :"<<bestLen<<endl;
-    cout<<"Znaleziono je wtedy: "<<timeOfBestSolution<<endl;
-    cout<<"T koncowa"<<currentTemperature<<endl;
-    cout<<"liczba epok: "<<eraNumber<<endl<<endl<<endl;
-
-    //dealokujemy nie potrzebny nam już miernik czasu
+    }while(currentTemperature>=0.01 and time->getTime()<=maxTime);//todo 10,-9
+        //dealokujemy nie potrzebny nam już miernik czasu
     delete time;
 }
-
 
 
 //algorytm chciwy
@@ -124,7 +104,6 @@ void Sa::greedyAlg(){
     bestLen=0;
     int nextCity;
     int minLen = INT_MAX;
-
     //dopuki ścieżka niema zawiera wszywtkich wierzchołków grafu, pętla trwa
     while(size(bestPath)!=matrixSize){
         minLen=INT_MAX;
@@ -150,7 +129,6 @@ void Sa::greedyAlg(){
     bestPath.push_back(0);
     //zwiększamy również odpowiednio długość znalezionego cyklu
     bestLen+=matrix[currentCity][0];
-
 }
 
 
@@ -186,7 +164,7 @@ double Sa::calcExpotentialTemp(double T, int eraNumber){
 pair<int, int> Sa::generateSwapPoints(){
     random_device rd;
     mt19937 gen(rd());
-    uniform_real_distribution<> dis(0, 1);	// uniform distribution between 0 and 1
+    uniform_real_distribution<> dis(0, 1);  //losowanie miedzy 0 a 1
 
     int indexI = (int)(dis(gen) * matrixSize);
     int indexJ = (int)(dis(gen) * matrixSize);
@@ -212,8 +190,6 @@ void Sa::swapPoints(pair<int, int> swappedPoints){
     if(i == 0 or j==0){
         testPath[matrixSize] = testPath[0];
     }
-
-
 }
 
 //wyliczamy koszt danego cyklu dodając wagi krawędzi
@@ -222,6 +198,20 @@ void Sa::calcLen(){
     for(int i = 0; i< matrixSize; i++){
         testLen += matrix[testPath[i]][testPath[i+1]];
     }
+}
 
+
+long Sa::calcBeginTemperature() {
+    testPath = bestPath;
+    testLen = bestLen;
+    long sum = testLen;
+
+    for(int i=0; i<99; i++){
+        swapPoints(generateSwapPoints());
+        calcLen();
+        sum += testLen;
+    }
+    sum *= 0.015;
+    return sum;
 }
 

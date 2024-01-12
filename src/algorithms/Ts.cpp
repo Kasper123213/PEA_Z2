@@ -15,8 +15,8 @@ Ts::Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime){
     this->matrixSize = matrixSize;
     this->neighbourhood = neighbourhood;
     this->maxTime = maxTime;
-    tabuLen = matrixSize * 1.5;
-    iterationStopCondition = 100;
+    tabuLen = matrixSize * 1.2;
+    iterationStopCondition = matrixSize * 20;
 
     for(int i=0;i<matrixSize;i++){
         tabuList.push_back({});
@@ -34,10 +34,10 @@ Ts::~Ts() {
 
 void Ts::startSearching() {
     greedyAlg();
-    int greedyLen = bestLen;//todo delete
     vector<pair<int,int>> const changes = getChanges();
-    Time* time = new Time();
+    time = new Time();
     time->start();
+    timeOfBestSolution = time->getTime();
     currentPath = bestPath;
     currentLen = bestLen;
     pair<int, int> bestPair;
@@ -45,6 +45,9 @@ void Ts::startSearching() {
     do{
         //wybieranie sąsiadów
         bestPair = bestChange(changes);
+
+        tabuList[bestPair.first][bestPair.second] = tabuLen;
+        iterationCounter++;
 
         //zmniejszanie listy tabu
         for(auto & v : tabuList){
@@ -55,34 +58,22 @@ void Ts::startSearching() {
             }
         }
 
-        tabuList[bestPair.first][bestPair.second] = tabuLen;
-        iterationCounter++;
 
         //mechanizm mający zapewnić dywersyfikacje
-        if(iterationCounter<iterationStopCondition){
+        if(iterationCounter>iterationStopCondition){
             iterationCounter = 0;
             clearTabu();
-
             random_device rd;
             mt19937 gen(rd());
             uniform_real_distribution<> dis(0, changes.size()-1);
+            pair<int, int> randomchoice;
 
-            pair<int, int> randomchoice = changes[dis(gen)];
-
-            doChange(randomchoice.first, randomchoice.second);
-
+            for(int i=0;i<matrixSize/2;i++) {
+                randomchoice = changes[dis(gen)];
+                doChange(randomchoice.first, randomchoice.second);
+            }
         }
     }while(time->getTime()<maxTime);
-
-//    cout<<"Juz po tabu"<<endl;
-////    cout<<"Czas to: "<<time->getTime()<<" a oczekiwany to : "<<maxTime<<endl;//todo to do  przeniesienia
-//    cout<<"currentPath: ";
-//    for(int i:currentPath){
-//        cout<<i<<", ";
-//    }
-//    cout<<endl<<"currentLen: "<<currentLen<<endl;
-//    cout<<"greedylen to :"<<greedyLen<<endl;
-//    cout<<"bestlen to :"<<bestLen<<endl;
 
     delete time;
 }
@@ -115,15 +106,6 @@ void Ts::greedyAlg(){
     }
     bestPath.push_back(0);
     bestLen+=matrix[currentCity][0];
-
-    //##############################################
-//    cout<<"Greedy: najlepsza path ";//todo usunąć
-//    for(int i:bestPath){
-//        cout<<i<<", ";
-//    }
-//
-//    cout<<endl<<"len: "<<bestLen<<endl;
-    //##############################################
 
 }
 
@@ -172,12 +154,16 @@ pair<int, int> Ts::bestChange(vector<pair<int, int>> changes){
             found = true;
         }
     }
+
+
     if(found){
         currentPath = bestNeighbour;
         currentLen = neighbourLen;
         if(currentLen<bestLen){
             bestPath = currentPath;
             bestLen = currentLen;
+            timeOfBestSolution = time->getTime();
+
         }
     }else{ //sprawdzanie kryterium aspiracji (najdłużej na liście tabu)
         bestPair = {-1,-1};
@@ -191,7 +177,6 @@ pair<int, int> Ts::bestChange(vector<pair<int, int>> changes){
                     bestPair.second = j;
                 }
             }
-
         }
 
         doChange(bestPair.first, bestPair.second);
@@ -228,12 +213,9 @@ void Ts::doInsert(int where, int from){
     for(int i = 0;i<testPath.size()-1;i++){
         if(i==where) newPath.push_back(testPath[from]);
         else if(i == from)continue;
-
         newPath.push_back(testPath[i]);
-
     }
     newPath.push_back(newPath[0]);
-
     testPath = newPath;
 }
 
@@ -247,11 +229,9 @@ void Ts::doSwap(int indexFirst, int indexSecond){
 void Ts::doInvert(int indexSmaller, int indexBigger){
     vector<int> inverted;
     vector<int> newPath;
-
     for(int i = indexBigger; i >=indexSmaller; i--){
         inverted.push_back(testPath[i]);
     }
-
     for(int i=0; i<testPath.size()-1; i++){
         if(i<=indexBigger and i>=indexSmaller) {
             newPath.push_back(inverted[i-indexSmaller]);
@@ -263,9 +243,7 @@ void Ts::doInvert(int indexSmaller, int indexBigger){
     testPath = newPath;
 }
 
-
-
-
+//liczenie kosztu ścieżki
 void Ts::calcCost(){
     testLen = 0;
     for(int i=0; i<testPath.size()-1;i++){
@@ -273,7 +251,7 @@ void Ts::calcCost(){
     }
 
 }
-
+//zerowanie listy tabu
 void Ts::clearTabu(){
     for(vector<int> v: tabuList){
         v.clear();

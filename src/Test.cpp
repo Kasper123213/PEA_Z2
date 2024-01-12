@@ -6,22 +6,19 @@
 
 //konstruktor klasy
 Test::Test() {
+
     //zmienna przechowująca decyzje użytkownika o uruchomieniu testu automatycznegp
     char choice;
 
     while (true) {
-        cout << "Czy chciałbyś wykonać testowanie automatyczne algorytmów dla wielu wartości? t/n" << endl
-             << "(Opcja do generowania sprawozdania). Aby wyjść naciśnij dowolną inną literę" <<endl;
+        cout << "Czy chcesz kontynuować? T/N Aby wyjść naciśnij dowolną inną literę" <<endl;
         cout<<">>";
         cin >> choice;
         cout<<endl;
 
-
         if (choice == 't' or choice == 'T') {
-//            startAutoTesting(); //todo
-        } else if (choice == 'n' or choice == 'N') {
             startTest();
-        } else {
+        }else {
             return;
         }
 
@@ -72,17 +69,6 @@ void Test::pokazDane(){
 
 //uruchomienie testów algorytmu
 void Test::startTest(){
-    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp");
-    neighbourhood =1;
-    maxTime = 10;
-
-    coolingType = 1;
-    coolingFactor = 0.99;
-
-    startAnneling();
-//    saveSolution();
-//    cout<<"Długość cyklu to: "<<checkPath("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\cmake-build-debug\\solution1.txt")<<endl;
-    return;
     while (true){
         pokazDane();
 
@@ -144,7 +130,7 @@ void Test::startTest(){
                 break;
             case 6:
                 if(coolingFactor!=0 and maxTime>0 and matrixSize>0 and coolingType!=0) {
-                    if((coolingType = 1 or coolingType==3) and coolingFactor>=1){
+                    if((coolingType == 1 or coolingType==3) and coolingFactor>=1){
                         cout<<"Przy tym typie chłodzenia współczynnik chłodzenia powinien być mniejszy od 1"<<endl;
                         break;
                     }else {
@@ -195,6 +181,13 @@ void Test::startAnneling() {
     bestSolutionLen=simAnneling->bestLen;
     bestSolutionPath=simAnneling->bestPath;
 
+
+    cout<<"Najlepsze rozwiązanie to: "<<endl;
+    for(auto i:bestSolutionPath){
+        cout<<i<<", ";
+    }
+    cout<<endl<<"Jego koszt to: "<<bestSolutionLen<<endl<<
+        "Znaleziono je po czasie: "<<simAnneling->timeOfBestSolution<<endl<<endl;
     delete simAnneling;
 }
 
@@ -205,6 +198,13 @@ void Test::startTabuSearch(){
     tabuSearch->startSearching();
     bestSolutionLen=tabuSearch->bestLen;
     bestSolutionPath=tabuSearch->bestPath;
+
+    cout<<"Najlepsze rozwiązanie to: "<<endl;
+    for(auto i:bestSolutionPath){
+        cout<<i<<", ";
+    }
+    cout<<endl<<"Jego koszt to: "<<bestSolutionLen<<endl<<
+    "Znaleziono je po czasie: "<<tabuSearch->timeOfBestSolution<<endl<<endl;
     delete tabuSearch;
 }
 

@@ -6,6 +6,7 @@
 #define PEA2_TS_H
 #include <iostream>
 #include <vector>
+#include "../time/Time.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
     int testLen;//stan do sprawdzenia
     vector<int> testPath;
     vector<vector<int>> tabuList;
+    Time* time;
 
     void greedyAlg();
     vector<pair<int, int>> getChanges();
@@ -39,6 +41,7 @@ public:
     int bestLen;
     vector<int> bestPath;
     vector<int> currentPath;
+    int timeOfBestSolution;
 
 };
 

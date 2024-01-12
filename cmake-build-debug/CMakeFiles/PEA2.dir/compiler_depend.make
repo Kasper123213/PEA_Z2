@@ -154,6 +154,7 @@ CMakeFiles/PEA2.dir/src/Test.cpp.obj: C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/vadefs.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/wchar.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/wctype.h \
+  C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/time/Time.h \
   C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/Test.h \
   C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/algorithms/Sa.h \
   C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/algorithms/Ts.h \
@@ -1589,6 +1590,8 @@ C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32
 
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/wctype.h:
 
+C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/time/Time.h:
+
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/x86_64-w64-mingw32/include/debugapi.h:
 
 C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/algorithms/Sa.cpp:
@@ -1598,8 +1601,6 @@ C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/Test.h:
 C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/algorithms/Sa.h:
 
 C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/algorithms/Ts.h:
-
-C:/Users/radom/OneDrive/Pulpit/PEA_Z2/src/time/Time.h:
 
 C:/Program\ Files/JetBrains/CLion\ 2022.3.3/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/algorithm:
 
