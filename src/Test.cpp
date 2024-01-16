@@ -11,14 +11,16 @@ Test::Test() {
     char choice;
 
     while (true) {
-        cout << "Czy chcesz kontynuować? T/N Aby wyjść naciśnij dowolną inną literę" <<endl;
+        cout << "Czy uruchomic testy automatyczne do sprawozdania? T/N/exit" <<endl;
         cout<<">>";
         cin >> choice;
         cout<<endl;
 
         if (choice == 't' or choice == 'T') {
+            testyDoSprawozdanie();
+        }else if(choice == 'n' or choice == 'N'){
             startTest();
-        }else {
+        }else{
             return;
         }
 
@@ -50,7 +52,7 @@ void Test::pokazDane(){
     }
     if(coolingFactor!=0)cout<<"Współczynnik Zmiany Temperatury: "<<coolingFactor<<endl;
     if(coolingType!=0){
-        cout<<"Rodzaj Zmiany Temperatury: "<<coolingFactor;
+        cout<<"Rodzaj Zmiany Temperatury: "<<coolingFactor<<endl;
         switch (coolingType){
             case 1:
                 cout<<"Geometryczny"<<endl;
@@ -73,16 +75,16 @@ void Test::startTest(){
         pokazDane();
 
         cout << "Co chcesz zrobić?\n"
-             "1.Wczytanie grafu z pliku\n"
-             "2.Wprowadzenie kryterium stopu (wspólne dla obu algorytmów)\n"
-             "3.Wybór sąsiedztwa\n"
-             "4.Uruchomianie algorytmu TS\n"
-             "5.Ustawienie współczynnika zmiany temperatury dla SW\n"
-             "6.Uruchomianie algorytmu SW\n"
-             "7.Zapis ścieżki rozwiązania do pliku txt\n"
-             "8.Wczytanie ścieżki rozwiązania z pliku txt i obliczenie na drogi na podstawie wczytanej tabeli kosztów\n"
-             "9.Wybieranie typu schładzania\n"
-             "0.Wyjście" << endl;
+                "1.Wczytanie grafu z pliku\n"
+                "2.Wprowadzenie kryterium stopu (wspólne dla obu algorytmów)\n"
+                "3.Wybór sąsiedztwa\n"
+                "4.Uruchomianie algorytmu TS\n"
+                "5.Ustawienie współczynnika zmiany temperatury dla SW\n"
+                "6.Uruchomianie algorytmu SW\n"
+                "7.Zapis ścieżki rozwiązania do pliku txt\n"
+                "8.Wczytanie ścieżki rozwiązania z pliku txt i obliczenie na drogi na podstawie wczytanej tabeli kosztów\n"
+                "9.Wybieranie typu schładzania SW\n"
+                "0.Wyjście" << endl;
         //wybór czynności przez użytkownika
         int choice;
         cout<<">>";
@@ -111,9 +113,9 @@ void Test::startTest(){
                 break;
             case 3:
                 cout<<"Wybierz metode generowania sąsiedstwa"<<endl
-                <<"1. Insert"<<endl
-                <<"2. Swap"<<endl
-                <<"3. Invert\n>>";
+                    <<"1. Insert"<<endl
+                    <<"2. Swap"<<endl
+                    <<"3. Invert\n>>";
                 cin>>neighbourhood;
                 break;
             case 4:
@@ -152,7 +154,10 @@ void Test::startTest(){
                 cout<<"Długość cyklu to: "<<checkPath(path)<<endl;
                 break;
             case 9:
-                cout<<"Wybierz typ zmiany temperatury"<<endl<<">>";
+                cout<<"Wybierz typ zmiany temperatury"<<endl<<
+                    "1. Geometryczny"<<endl<<
+                    "2. Logarytmiczny"<<endl<<
+                    "3. Wykładniczy"<<endl<<">>";
                 cin>>coolingType;
                 break;
             default:
@@ -204,7 +209,7 @@ void Test::startTabuSearch(){
         cout<<i<<", ";
     }
     cout<<endl<<"Jego koszt to: "<<bestSolutionLen<<endl<<
-    "Znaleziono je po czasie: "<<tabuSearch->timeOfBestSolution<<endl<<endl;
+        "Znaleziono je po czasie: "<<tabuSearch->timeOfBestSolution<<endl<<endl;
     delete tabuSearch;
 }
 
@@ -334,5 +339,563 @@ void Test::saveSolution(){
         cout << "Zapisano do pliku." << endl;
     } else {
         cout << "Błąd podczas otwierania pliku." << endl;
+    }
+}
+
+
+
+
+void Test::testyDoSprawozdanie(){
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\ftv55.atsp");
+    cout<<"odpalam ftv55, cooling type = 1"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv55_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.9989, 2*60, 1);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+    cout<<"odpalam ftv55, cooling type = 2"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv55_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.00014, 2*60, 2);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+    cout<<"odpalam ftv55, cooling type = 3"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv55_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.99999992, 2*60, 3);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+
+
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\ftv170.atsp");
+    cout<<"odpalam ftv170, cooling type = 1"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv170_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.9952, 4*60, 1);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+
+    cout<<"odpalam ftv170, cooling type = 2"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv170_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.0012, 4*60, 2);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+
+    cout<<"odpalam ftv170, cooling type = 3"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_ftv170_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.9999981, 4*60, 3);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp");
+
+    cout<<"odpalam rbg358, cooling type = 1"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_rbg358_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.986, 6*60, 1);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+    cout<<"odpalam rbg358, cooling type = 2"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_rbg358_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.003, 6*60, 2);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+    cout<<"odpalam rbg358, cooling type = 3"<<endl;
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "SA_rbg358_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Sa* simAnneling = new Sa(matrix, matrixSize, 0.999986, 6*60, 3);
+        simAnneling->start();
+
+        for(int x:simAnneling->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:simAnneling->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete simAnneling;
+    }
+
+
+
+
+    cout<<"########################################################"<<endl<<
+        "Tabu Search"<<endl<<
+        "########################################################"<<endl;
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\ftv55.atsp");
+    cout<<"odpalam ftv55, sąsiedzi = 1"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv55_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 1, 2*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+
+
+    cout<<"odpalam ftv55, sąsiedzi = 2"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv55_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 2, 2*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+    cout<<"odpalam ftv55, sąsiedzi = 3"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv55_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 3, 2*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\ftv170.atsp");
+    cout<<"odpalam ftv170, cooling type = 1"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv170_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 1, 4*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+
+
+    cout<<"odpalam ftv170, cooling type = 2"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv170_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 2, 4*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+    cout<<"odpalam ftv170, cooling type = 3"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_ftv170_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 3, 4*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+    readMatrix("C:\\Users\\radom\\OneDrive\\Pulpit\\PEA_Z2\\z2_z3\\ATSP\\rbg358.atsp");
+    cout<<"odpalam rbg358, cooling type = 1"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_rbg358_1_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 1, 6*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+    cout<<"odpalam rbg358, cooling type = 2"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_rbg358_2_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 2, 6*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
+    }
+
+
+
+
+
+    cout<<"odpalam rbg358, cooling type = 3"<<endl;
+
+    for(int i=0;i<10;i++) {
+        cout<<i<<endl;
+
+        string nazwa = "TS_rbg358_3_" + to_string(i) + ".csv";
+        ofstream excelFile(nazwa);
+
+        Ts* tabuSearch = new Ts(matrix, matrixSize, 3, 6*60);
+        tabuSearch->startSearching();
+
+        for(int x:tabuSearch->wykresBesty){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->wykresCzasy){
+            excelFile<<x<<";";
+        }
+        excelFile<<endl;
+        for(int x:tabuSearch->bestPath){
+            excelFile<<x<<";";
+        }
+
+        excelFile.close();
+
+        delete tabuSearch;
     }
 }

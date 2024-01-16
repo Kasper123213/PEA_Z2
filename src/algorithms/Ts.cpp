@@ -2,7 +2,6 @@
 // Created by radom on 18.12.2023.
 //
 
-#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <random>
@@ -15,8 +14,8 @@ Ts::Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime){
     this->matrixSize = matrixSize;
     this->neighbourhood = neighbourhood;
     this->maxTime = maxTime;
-    tabuLen = matrixSize * 1.2;
-    iterationStopCondition = matrixSize * 20;
+    tabuLen = matrixSize * 0.4;
+    iterationStopCondition = matrixSize * 0.7;
 
     for(int i=0;i<matrixSize;i++){
         tabuList.push_back({});
@@ -29,10 +28,12 @@ Ts::Ts(int **matrix, int matrixSize, int neighbourhood, int maxTime){
 
 
 Ts::~Ts() {
+    delete time;
 }
 
 
 void Ts::startSearching() {
+
     greedyAlg();
     vector<pair<int,int>> const changes = getChanges();
     time = new Time();
@@ -40,12 +41,12 @@ void Ts::startSearching() {
     timeOfBestSolution = time->getTime();
     currentPath = bestPath;
     currentLen = bestLen;
+    wykresBesty.push_back(bestLen);
+    wykresCzasy.push_back(0);
     pair<int, int> bestPair;
-    int iterationCounter = 0;
     do{
         //wybieranie sąsiadów
         bestPair = bestChange(changes);
-
         tabuList[bestPair.first][bestPair.second] = tabuLen;
         iterationCounter++;
 
@@ -71,11 +72,12 @@ void Ts::startSearching() {
             for(int i=0;i<matrixSize/2;i++) {
                 randomchoice = changes[dis(gen)];
                 doChange(randomchoice.first, randomchoice.second);
+                currentPath = testPath;
+                currentLen = bestLen;
             }
         }
-    }while(time->getTime()<maxTime);
+    }while(time->getTime()<=maxTime);
 
-    delete time;
 }
 
 
@@ -164,6 +166,8 @@ pair<int, int> Ts::bestChange(vector<pair<int, int>> changes){
             bestLen = currentLen;
             timeOfBestSolution = time->getTime();
 
+            wykresBesty.push_back(bestLen);
+            wykresCzasy.push_back(time->getTime());
         }
     }else{ //sprawdzanie kryterium aspiracji (najdłużej na liście tabu)
         bestPair = {-1,-1};
@@ -186,6 +190,10 @@ pair<int, int> Ts::bestChange(vector<pair<int, int>> changes){
         if(currentLen<bestLen) {
             bestPath = currentPath;
             bestLen = currentLen;
+            timeOfBestSolution = time->getTime();
+
+            wykresBesty.push_back(bestLen);
+            wykresCzasy.push_back(time->getTime());
         }
     }
     return bestPair;
@@ -208,6 +216,8 @@ void Ts::doChange(int indexFirst, int indexSecond){
             break;
     }
 }
+
+
 void Ts::doInsert(int where, int from){
     vector<int> newPath;
     for(int i = 0;i<testPath.size()-1;i++){
@@ -257,17 +267,3 @@ void Ts::clearTabu(){
         v.clear();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

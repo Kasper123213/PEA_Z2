@@ -39,6 +39,10 @@ public:
     int bestLen;
     int currentLen; //stan w ktorym teraz przebywamy
     int timeOfBestSolution;
+
+
+    vector<int> wykresCzasy;
+    vector<int> wykresBesty;
 };
 
 

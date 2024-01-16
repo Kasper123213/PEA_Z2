@@ -28,7 +28,6 @@ void Sa::start(){
     //na początku algorytmem chciwym wybierane jest początkowe rozwiązanie
     greedyAlg();    //początkowa temperatura jest iloczynem kosztu najlepszego znalezionego rozwiązania oraz pewnego wspolczynnika
     beginningTemperature = calcBeginTemperature();
-//    cout<<"T początkowa "<<beginningTemperature<<endl;
     //długość epoki również jest zależna od wielkości problemu
     eraLen = matrixSize * (matrixSize -1) / 2;
     //inicjalizujemy generator liczb losowych w przedziale 0-1
@@ -39,6 +38,8 @@ void Sa::start(){
     currentLen = bestLen;
     testLen = bestLen;
 
+    wykresBesty.push_back(bestLen);
+    wykresCzasy.push_back(0);
     //na potrzeby dokladnego zbadania problemu zainicjalizowane zmienne opisujące 3 rozwiązania.
     //najlepsze znalezione rozwiązanie - best*,
     //rozwiązanie którego sąsiadów badamy - current* oraz rozwiązanie którego akceptacje rozważamy test*
@@ -73,6 +74,9 @@ void Sa::start(){
                     bestLen = currentLen;
                     bestPath = currentPath;
                     timeOfBestSolution = time->getTime();
+
+                    wykresBesty.push_back(bestLen);
+                    wykresCzasy.push_back(timeOfBestSolution);
                 }
             }else{
                 //jeśli sąsiad ma siększy koszt niż nasze rozwiązanie i tak ma szansę być nowym rozwiązaniem
@@ -93,6 +97,7 @@ void Sa::start(){
         //drógim warunkiem jest przekroczenie preferowanego przez nas czasu działania algorytmu
     }while(currentTemperature>=0.01 and time->getTime()<=maxTime);//todo 10,-9
         //dealokujemy nie potrzebny nam już miernik czasu
+
     delete time;
 }
 
@@ -200,18 +205,21 @@ void Sa::calcLen(){
     }
 }
 
-
 long Sa::calcBeginTemperature() {
     testPath = bestPath;
     testLen = bestLen;
-    long sum = testLen;
+    int minLen = INT_MAX;
+    int maxLen = 0;
 
-    for(int i=0; i<99; i++){
+    for(int i=1; i<100; i++){
         swapPoints(generateSwapPoints());
         calcLen();
-        sum += testLen;
+        if(testLen<minLen){
+            minLen = testLen;
+        }else if(testLen > maxLen){
+            maxLen = testLen;
+        }
     }
-    sum *= 0.015;
-    return sum;
+    return (maxLen - minLen)*1.5;
 }
 

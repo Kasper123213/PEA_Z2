@@ -18,6 +18,7 @@ private:
     int maxTime;
     int tabuLen;
     int iterationStopCondition;
+    int iterationCounter=0;
     int testLen;//stan do sprawdzenia
     vector<int> testPath;
     vector<vector<int>> tabuList;
@@ -42,6 +43,10 @@ public:
     vector<int> bestPath;
     vector<int> currentPath;
     int timeOfBestSolution;
+
+
+    vector<int> wykresCzasy;
+    vector<int> wykresBesty;
 
 };
 

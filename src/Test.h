@@ -16,7 +16,7 @@ private:
     int coolingType=0;
     int matrixSize=0;
     int **matrix{};
-    int bestSolutionLen;
+    int bestSolutionLen = INT_MAX;
     vector<int> bestSolutionPath;
     void pokazDane();
     void startTest();
@@ -26,6 +26,7 @@ private:
     bool readMatrix(string path);
     int checkPath(string path);
     void saveSolution();
+    void testyDoSprawozdanie();
 public:
     Test();
     ~Test();
