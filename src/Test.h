@@ -26,7 +26,6 @@ private:
     bool readMatrix(string path);
     int checkPath(string path);
     void saveSolution();
-    void testyDoSprawozdanie();
 public:
     Test();
     ~Test();

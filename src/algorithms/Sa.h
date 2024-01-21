@@ -25,7 +25,7 @@ private:
     double calcGeometricTemp(double T);
     double calcLogaritmicTemp(double T, int eraNumber);
     double calcExpotentialTemp(double T, int eraNumber);
-    long calcBeginTemperature();
+    int calcBeginTemperature();
     pair<int, int> generateSwapPoints();
     void swapPoints(pair<int, int> swappedPoints);
 public:
@@ -35,7 +35,7 @@ public:
 
     vector<int> bestPath;
     vector<int> currentPath;
-    long long beginningTemperature;
+    int beginningTemperature;
     int bestLen;
     int currentLen; //stan w ktorym teraz przebywamy
     int timeOfBestSolution;

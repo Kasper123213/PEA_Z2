@@ -205,12 +205,13 @@ void Sa::calcLen(){
     }
 }
 
-long Sa::calcBeginTemperature() {
+int Sa::calcBeginTemperature() {
     testPath = bestPath;
     testLen = bestLen;
     int minLen = INT_MAX;
     int maxLen = 0;
 
+//dla stu dykli znajdujemy najmniejszą i największą wagę. Ich różnicę pomnożoną razy pewien współczynnik zwracamy jako temperature początkową
     for(int i=1; i<100; i++){
         swapPoints(generateSwapPoints());
         calcLen();
